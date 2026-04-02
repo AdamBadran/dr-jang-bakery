@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" class="lang-en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Jang Factory — Premium Handcrafted Bakery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Baloo+2:wght@400;600;700;800&family=Cinzel:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:     #F9F4EB;
+      --parchment: #EDE3CE;
+      --tan:       #D5C4A1;
+      --brown-lt:  #8B6347;
+      --brown:     #5C3D2E;
+      --brown-dk:  #3D2314;
+      --choc:      #2C1810;
+      --amber:     #D97706;
+      --amber-lt:  #F59E0B;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:115%; }
+    body {
+      background:var(--cream);
+      color:var(--choc);
+      font-family:'Lora', Georgia, serif;
+      overflow-x:hidden;
+    }
+
+    /* Grain texture */
+    body::after {
+      content:''; position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity:.04; pointer-events:none; z-index:9998; mix-blend-mode:multiply;
+    }
+
+    /* ── Language toggle ── */
+    html.lang-en .ko { display:none !important; }
+    html.lang-ko .en { display:none !important; }
+
+    .lang-btn {
+      font-family:'Cinzel', serif;
+      font-size:.58rem; letter-spacing:.15em; text-transform:uppercase;
+      padding:.4rem .9rem; border:1px solid rgba(215,119,6,.5);
+      background:none; color:var(--amber); cursor:pointer;
+      transition:all .2s ease; border-radius:0;
+      display:flex; align-items:center; gap:.4rem;
+    }
+    .lang-btn:hover { background:var(--amber); color:var(--choc); }
+    .lang-btn:active { opacity:.8; }
+    .lang-btn:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+
+    /* ── NAV ── */
+    #nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      padding:1.75rem 3rem;
+      display:flex; align-items:center; justify-content:space-between; gap:2rem;
+      transition:padding .4s ease, background .4s ease, box-shadow .4s ease;
+    }
+    #nav.scrolled {
+      padding:1rem 3rem;
+      background:rgba(44,24,16,.96);
+      backdrop-filter:blur(16px);
+      box-shadow:0 1px 0 rgba(215,119,6,.15);
+    }
+    .nav-logo { display:flex; align-items:center; gap:.75rem; text-decoration:none; flex-shrink:0; }
+    .nav-logo-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:#fff; line-height:1.1; }
+    .nav-logo-sub  { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.25em; color:var(--amber); text-transform:uppercase; }
+    .nav-links { display:flex; gap:2rem; align-items:center; }
+    .nav-links a {
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.18em; text-transform:uppercase;
+      color:rgba(255,255,255,.65); text-decoration:none; transition:color .2s ease;
+    }
+    .nav-links a:hover { color:var(--amber); }
+    .nav-links a:focus-visible { outline:2px solid var(--amber); outline-offset:4px; }
+    .nav-right { display:flex; align-items:center; gap:1rem; }
+    .nav-cta {
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.15em; text-transform:uppercase;
+      color:var(--choc); background:var(--amber); padding:.5rem 1.2rem;
+      text-decoration:none; transition:background .2s ease, box-shadow .2s ease;
+      box-shadow:0 2px 12px rgba(215,119,6,.4);
+    }
+    .nav-cta:hover { background:var(--amber-lt); }
+    .nav-cta:active { opacity:.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height:100vh; position:relative;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:0 3rem 5rem; overflow:hidden;
+    }
+    .hero-img {
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      filter:brightness(.42) saturate(1.1);
+    }
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(165deg,rgba(44,24,16,.75) 0%,rgba(92,61,46,.3) 50%,rgba(215,119,6,.12) 100%);
+    }
+    .hero-glow {
+      position:absolute; top:-200px; right:-200px; width:600px; height:600px;
+      background:radial-gradient(circle,rgba(215,119,6,.2) 0%,transparent 70%);
+      pointer-events:none; z-index:1;
+    }
+    .hero-content { position:relative; z-index:2; max-width:900px; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.25em; text-transform:uppercase;
+      color:var(--amber); border:1px solid rgba(215,119,6,.5); padding:.4rem 1rem; margin-bottom:2rem;
+    }
+    .hero-badge::before { content:''; width:6px; height:6px; background:var(--amber); border-radius:50%; animation:pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .hero-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.5rem,9vw,8.5rem); font-weight:300;
+      line-height:.9; letter-spacing:-.02em; color:#fff;
+    }
+    .hero-title em { color:var(--amber); font-style:italic; }
+    .hero-title .ko-title {
+      font-family:'Noto Serif KR',serif;
+      font-size:clamp(2.5rem,6vw,5.5rem); font-weight:300;
+      letter-spacing:.02em;
+    }
+    .hero-sub {
+      margin-top:1.5rem;
+      font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.35em; text-transform:uppercase;
+      color:rgba(255,255,255,.5);
+    }
+    .hero-bottom {
+      position:relative; z-index:2;
+      display:flex; align-items:flex-end; justify-content:space-between;
+      margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,.1);
+    }
+    .hero-desc { font-size:.9rem; line-height:1.85; color:rgba(255,255,255,.6); max-width:400px; font-style:italic; }
+    .hero-scroll {
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      color:rgba(255,255,255,.35); font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.2em; text-transform:uppercase;
+      cursor:pointer; border:none; background:none; transition:color .2s ease;
+    }
+    .hero-scroll:hover { color:var(--amber); }
+    .hero-scroll svg { animation:scrollBounce 2s ease infinite; }
+    @keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ── UTILS ── */
+    .deco-line { height:1px; background:linear-gradient(to right,transparent,var(--amber),transparent); }
+    .section-label { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:var(--amber); }
+    .section-title  { font-family:'Cormorant Garamond',serif; font-weight:300; letter-spacing:-.01em; line-height:1; }
+    .section-title-ko { font-family:'Noto Serif KR',serif; font-weight:300; line-height:1.2; }
+    .fade-up { opacity:0; transform:translateY(28px); transition:opacity .65s ease, transform .65s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up.d1{transition-delay:.1s} .fade-up.d2{transition-delay:.2s}
+    .fade-up.d3{transition-delay:.3s} .fade-up.d4{transition-delay:.4s}
+
+    /* ── STORY ── */
+    .story-section { background:var(--choc); color:var(--cream); }
+
+    /* ── CEO ── */
+    .ceo-photo { aspect-ratio:4/5; object-fit:cover; width:100%; filter:sepia(.12) contrast(1.04); }
+    .cred-item {
+      display:flex; gap:1rem; padding:.85rem 0;
+      border-bottom:1px solid rgba(92,61,46,.12);
+    }
+    .cred-year { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.1em; color:var(--amber); min-width:2.5rem; padding-top:.1rem; flex-shrink:0; }
+
+    /* ── PRODUCTS ── */
+    .tab-btn {
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.13em; text-transform:uppercase;
+      padding:.48rem 1.1rem; border:1px solid rgba(213,196,161,.35); background:none;
+      color:rgba(249,244,235,.5); cursor:pointer; border-radius:999px;
+      transition:all .22s ease;
+    }
+    .tab-btn.active { background:var(--amber); color:var(--choc); border-color:var(--amber); }
+    .tab-btn:hover:not(.active) { border-color:var(--amber); color:var(--amber); }
+    .tab-btn:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:grid; }
+
+    .product-card { position:relative; overflow:hidden; cursor:pointer; background:var(--parchment); }
+    .product-card img {
+      width:100%; aspect-ratio:1; object-fit:cover;
+      transition:transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .product-card:hover img { transform:scale(1.07); }
+    .p-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top,rgba(44,24,16,.9) 0%,rgba(44,24,16,.15) 55%,transparent 100%);
+      opacity:.7; transition:opacity .35s ease;
+    }
+    .product-card:hover .p-overlay { opacity:1; }
+    .p-info {
+      position:absolute; bottom:0; left:0; right:0; padding:1.25rem;
+      transform:translateY(0); transition:transform .35s ease;
+    }
+    .product-card:hover .p-info { transform:translateY(0); }
+    .p-name    { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:500; color:#fff; line-height:1.2; display:block; }
+    .p-name-ko { font-family:'Noto Serif KR',serif; font-size:.92rem; font-weight:400; color:#fff; line-height:1.3; display:block; }
+    .p-desc    { font-family:'Lora',serif; font-size:.7rem; color:rgba(255,255,255,.68); line-height:1.5; margin-top:.3rem; display:block; }
+    .p-tag     {
+      font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.15em; text-transform:uppercase;
+      padding:.22rem .6rem; background:var(--amber); color:var(--choc);
+      position:absolute; top:1rem; left:1rem; z-index:2;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-outer { overflow:hidden; }
+    .marquee-track { display:flex; width:max-content; animation:scrollLeft 40s linear infinite; }
+    .marquee-track:hover { animation-play-state:paused; }
+    @keyframes scrollLeft { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .partner-item {
+      font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
+      color:rgba(255,255,255,.35); padding:0 3rem; border-right:1px solid rgba(255,255,255,.07);
+      white-space:nowrap; transition:color .2s ease;
+    }
+    .partner-item:hover { color:var(--amber); }
+
+    /* ── CERT ── */
+    .cert-ring {
+      width:130px; height:130px; border-radius:50%;
+      border:1px solid var(--amber);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1.25rem;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-amber {
+      display:inline-flex; align-items:center; gap:.75rem;
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+      background:var(--amber); color:var(--choc); padding:.85rem 2rem;
+      border:none; cursor:pointer; text-decoration:none;
+      box-shadow:0 4px 18px rgba(215,119,6,.35);
+      transition:background .2s ease, box-shadow .2s ease, transform .1s ease;
+    }
+    .btn-amber:hover { background:var(--amber-lt); box-shadow:0 6px 28px rgba(215,119,6,.55); }
+    .btn-amber:active { transform:translateY(1px); }
+    .btn-amber:focus-visible { outline:2px solid var(--choc); outline-offset:2px; }
+
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:.75rem;
+      font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+      background:transparent; color:var(--cream); padding:.85rem 2rem;
+      border:1px solid rgba(249,244,235,.3); cursor:pointer; text-decoration:none;
+      transition:all .2s ease;
+    }
+    .btn-ghost:hover { border-color:var(--amber); color:var(--amber); }
+    .btn-ghost:active { opacity:.75; }
+    .btn-ghost:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+
+    /* ── FOOTER ── */
+    .footer-link {
+      color:rgba(255,255,255,.5); text-decoration:none; font-family:'Lora',serif; font-size:.83rem;
+      transition:color .2s ease;
+    }
+    .footer-link:hover { color:var(--amber); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-track { background:var(--cream); }
+    ::-webkit-scrollbar-thumb { background:var(--amber); border-radius:2px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="48" stroke="#D97706" stroke-width="2" fill="none"/>
+      <path d="M50 22L50 72 M50 28C44 30 40 34 40 40 M50 28C56 30 60 34 60 40 M50 40C44 42 40 46 40 52 M50 40C56 42 60 46 60 52 M50 52C44 54 40 58 40 63 M50 52C56 54 60 58 60 63" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="50" cy="72" r="3.5" fill="#D97706"/>
+    </svg>
+    <div>
+      <div class="nav-logo-name">Dr. Jang's</div>
+      <div class="nav-logo-sub">Bread Factory</div>
+    </div>
+  </a>
+
+  <div class="nav-links" style="display:flex;">
+    <a href="#about"><span class="en">About</span><span class="ko">소개</span></a>
+    <a href="#products"><span class="en">Products</span><span class="ko">제품</span></a>
+    <a href="#partners"><span class="en">Partners</span><span class="ko">파트너</span></a>
+    <a href="#certification"><span class="en">HACCP</span><span class="ko">인증</span></a>
+  </div>
+
+  <div class="nav-right">
+    <!-- Language toggle -->
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()" aria-label="Toggle language">
+      <span class="en">🇰🇷 KO</span>
+      <span class="ko">🇺🇸 EN</span>
+    </button>
+    <a href="#contact" class="nav-cta">
+      <span class="en">Contact</span>
+      <span class="ko">문의하기</span>
+    </a>
+  </div>
+</nav>
+
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <img class="hero-img" src="https://placehold.co/1920x1080/2C1810/D97706?text=." alt="Artisan bread">
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="en">Available for wholesale &amp; partnership</span>
+      <span class="ko">도매 및 파트너십 문의 환영</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="en">Dr.<em>Jang</em><br>Factory</span>
+      <span class="ko ko-title">닥터장<br><em>팩토리</em></span>
+    </h1>
+
+    <p class="hero-sub">
+      <span class="en">Premium Handcrafted Bakery · Seoul, Korea</span>
+      <span class="ko">프리미엄 수제 베이커리 · 서울</span>
+    </p>
+
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        "요리는 사람이 만들고,<br>빵은 시간이 만든다."
+        <span style="font-size:.75rem;font-style:normal;color:rgba(255,255,255,.35);display:block;margin-top:.5rem;">
+          — CEO 장현호, 대한민국 제과기능장
+        </span>
+      </p>
+      <button class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+        <svg width="16" height="24" viewBox="0 0 16 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 4L8 20M2 14L8 20L14 14"/>
+        </svg>
+        <span class="en">Scroll</span>
+        <span class="ko">스크롤</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ STATS ═══ -->
+<section id="about" style="background:var(--choc);padding:4.5rem 3rem;border-bottom:1px solid rgba(215,119,6,.1);">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;">
+    <div class="fade-up">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">40+</div>
+      <div class="section-label" style="margin-top:.5rem;">
+        <span class="en">Years Experience</span><span class="ko">년 경력</span>
+      </div>
+    </div>
+    <div class="fade-up d1">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">30+</div>
+      <div class="section-label" style="margin-top:.5rem;">
+        <span class="en">Hotel Partners</span><span class="ko">호텔 파트너</span>
+      </div>
+    </div>
+    <div class="fade-up d2">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--amber);line-height:1.2;padding-top:.4rem;">HACCP</div>
+      <div class="section-label" style="margin-top:.5rem;">
+        <span class="en">Certified Facility</span><span class="ko">인증 시설</span>
+      </div>
+    </div>
+    <div class="fade-up d3">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">3</div>
+      <div class="section-label" style="margin-top:.5rem;">
+        <span class="en">Master Titles</span><span class="ko">명인 타이틀</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ BRAND STORY ═══ -->
+<section style="background:var(--choc);padding:6rem 3rem 7rem;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;">
+
+    <div class="fade-up">
+      <div class="section-label">
+        <span class="en">Brand Story</span><span class="ko">브랜드 스토리</span>
+      </div>
+      <h2 style="margin:1.25rem 0 2rem;">
+        <span class="en section-title" style="font-size:clamp(2.5rem,4.5vw,4rem);color:var(--cream);display:block;">
+          Bread crafted<br><em style="color:var(--amber);">by time,</em><br>not shortcuts.
+        </span>
+        <span class="ko section-title-ko" style="font-size:clamp(2rem,3.5vw,3.2rem);color:var(--cream);display:block;">
+          시간이 만드는<br><em style="color:var(--amber);">진짜 빵</em>의 이야기
+        </span>
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;font-size:.88rem;line-height:1.85;color:rgba(249,244,235,.62);">
+        <p>
+          <span class="en">Dr. Jang Factory is a premium handcrafted bakery embodying 40+ years of experience from Korea's National Master Baker, Jang Hyun-ho. Every loaf carries the craftsmanship of a chef who has led the kitchens of Korea's finest five-star hotels.</span>
+          <span class="ko">닥터장팩토리는 대한민국 제과명인, 장인, 장현호 기능장의 40여 년 경험을 담은 프리미엄 수제 베이커리입니다. 호텔의 품격을 담은 레시피로 매일 정성스럽게 구워냅니다.</span>
+        </p>
+        <p>
+          <span class="en">Using only natural sourdough starters and the finest ingredients, every product achieves deep flavor and a healthful quality that sets it apart. This isn't just bread — it's a work of artistry.</span>
+          <span class="ko">천연 발효종과 최상의 재료만을 사용하여 깊은 풍미와 건강한 맛을 동시에 담아냅니다. 단순한 빵이 아닌, 하나의 예술 작품으로 탄생하는 베이커리를 선보입니다.</span>
+        </p>
+        <p style="font-style:italic;color:rgba(249,244,235,.35);font-size:.8rem;">
+          <span class="en">Conrad · Four Seasons · Park Hyatt · Grand Hyatt — supplying Korea's finest hotels since 2015.</span>
+          <span class="ko">Conrad · Four Seasons · Park Hyatt · Grand Hyatt — 2015년부터 국내 최고의 호텔에 납품 중.</span>
+        </p>
+      </div>
+      <div style="margin-top:2.5rem;">
+        <a href="#products" class="btn-ghost">
+          <span class="en">View Products</span><span class="ko">제품 보기</span>
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h13M9 1l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="fade-up d2" style="display:flex;flex-direction:column;gap:1.75rem;">
+      <div style="padding:1.75rem;border:1px solid rgba(215,119,6,.15);background:rgba(215,119,6,.05);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--amber);margin-bottom:.75rem;">
+          <span class="en">Hotel-Grade Artisan Bread</span>
+          <span class="ko">호텔의 품격을 담은 수제 브레드</span>
+        </div>
+        <p style="font-size:.82rem;line-height:1.75;color:rgba(249,244,235,.55);">
+          <span class="en">The quality and taste of a National Master Baker. Every baked item is born from the chef's hands — care and know-how baked into every piece.</span>
+          <span class="ko">명인·장인·기능장 레벨의 높은 퀄리티와 맛. 셰프의 손끝에서 탄생하는 모든 베이킹 푸드에는 정성과 노하우가 고스란히 담겨 있습니다.</span>
+        </p>
+      </div>
+      <div style="padding:1.75rem;border:1px solid rgba(215,119,6,.15);background:rgba(215,119,6,.05);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--amber);margin-bottom:.75rem;">
+          <span class="en">The Magic of Natural Sourdough</span>
+          <span class="ko">천연 발효종의 마법으로 만드는 빵</span>
+        </div>
+        <p style="font-size:.82rem;line-height:1.75;color:rgba(249,244,235,.55);">
+          <span class="en">Natural levain delivers deep flavor and a soft, chewy texture. The all-natural fermentation process takes time — but it rewards with perfect taste.</span>
+          <span class="ko">자연 발효로 빚어낸 깊은 풍미와 부드러운 식감. 천연 재료만의 발효 과정이 시간이 걸리지만, 완벽한 맛으로 보답합니다.</span>
+        </p>
+      </div>
+      <div style="padding:1.75rem;border:1px solid rgba(215,119,6,.15);background:rgba(215,119,6,.05);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--amber);margin-bottom:.75rem;">
+          <span class="en">Bread &amp; Cookies as Art</span>
+          <span class="ko">예술 작품으로 창조되는 빵과 쿠키</span>
+        </div>
+        <p style="font-size:.82rem;line-height:1.75;color:rgba(249,244,235,.55);">
+          <span class="en">Not simply making bread — creating a work of art. Every bite delivers quality and flavor that speaks of genuine devotion.</span>
+          <span class="ko">단순히 빵을 만드는 것이 아니라 예술 작품을 창조한다는 신념. 입안에 닿는 순간 정성 가득한 느낌으로 품질과 맛을 깊이 전달합니다.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CEO PROFILE ═══ -->
+<section style="background:var(--cream);padding:7rem 3rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="fade-up" style="display:flex;align-items:center;gap:2rem;margin-bottom:4rem;">
+      <div class="section-label"><span class="en">CEO Profile</span><span class="ko">대표 프로필</span></div>
+      <div class="deco-line" style="flex:1;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:360px 1fr;gap:5rem;align-items:start;">
+      <div class="fade-up">
+        <div style="position:relative;">
+          <img class="ceo-photo" src="https://placehold.co/360x450/3D2314/F9F4EB?text=CEO" alt="CEO 장현호">
+          <div style="position:absolute;bottom:-14px;right:-14px;width:70px;height:70px;background:var(--amber);z-index:-1;"></div>
+          <div style="position:absolute;top:-10px;left:-10px;width:44px;height:44px;border:2px solid var(--amber);z-index:-1;"></div>
+        </div>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--choc);">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--cream);">장현호</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;color:var(--amber);margin-bottom:1rem;">
+            CEO &amp; <span class="en">Master Baker</span><span class="ko">대한민국 제과기능장</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem;">
+            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과기능장</span>
+            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">서울시 제과 명인</span>
+            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">조리 명인</span>
+            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과제빵 장인</span>
+            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">PhD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up d2">
+        <h2 style="margin-bottom:.75rem;">
+          <span class="en section-title" style="font-size:clamp(2rem,3.5vw,3.2rem);color:var(--brown-dk);display:block;">
+            National Master Baker &amp;<br><em style="color:var(--amber);">40 Years of Mastery</em>
+          </span>
+          <span class="ko section-title-ko" style="font-size:clamp(1.8rem,3vw,2.8rem);color:var(--brown-dk);display:block;">
+            국가대표 명인, 장인,<br><em style="color:var(--amber);">장현호 제과기능장</em>
+          </span>
+        </h2>
+        <p style="font-size:.87rem;line-height:1.8;color:var(--brown);margin-bottom:2.5rem;max-width:520px;">
+          <span class="en">Chef Jang has led the bakery kitchens of Korea's top five-star hotels for over 40 years and holds the most prestigious titles in Korean confectionery and baking.</span>
+          <span class="ko">40여 년간 국내외 특급 호텔 베이커리를 이끌어 온 장현호 셰프는 대한민국 제과제빵 분야에서 가장 영예로운 타이틀을 보유한 전문가입니다.</span>
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 2.5rem;">
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);padding-bottom:.65rem;border-bottom:1px solid var(--tan);margin-bottom:.25rem;">
+              <span class="en">Career</span><span class="ko">경력</span>
+            </div>
+            <div class="cred-item">
+              <div class="cred-year"><span class="en">Now</span><span class="ko">현재</span></div>
+              <div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);">
+                <span class="en">(주)닥터장팩토리 &amp; 닥터장베이킹 LAB CEO</span>
+                <span class="ko">(주)닥터장팩토리 · 닥터장베이킹 LAB 대표이사</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <div class="cred-year"><span class="en">SBUX</span><span class="ko">스벅</span></div>
+              <div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);">
+                <span class="en">Starbucks Korea — Marketing &amp; Product Development</span>
+                <span class="ko">㈜스타벅스커피코리아 마케팅 상품기획·개발 총괄</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <div class="cred-year"><span class="en">Hotel</span><span class="ko">호텔</span></div>
+              <div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);">
+                <span class="en">Grand Intercontinental · Grand Hyatt Seoul/Incheon · Josun Hotel Busan — Head Pastry Chef</span>
+                <span class="ko">그랜드 인터콘티넨탈 · 그랜드하얏트 서울/인천 · 조선호텔 부산 베이커리 책임 셰프</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <div class="cred-year"><span class="en">Prof</span><span class="ko">교수</span></div>
+              <div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);">
+                <span class="en">Yongin University of Arts &amp; Science — Adjunct Professor</span>
+                <span class="ko">용인예술과학대학교 호텔제빵과 겸임교수</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);padding-bottom:.65rem;border-bottom:1px solid var(--tan);margin-bottom:.25rem;">
+              <span class="en">Awards &amp; Education</span><span class="ko">수상 및 학력</span>
+            </div>
+            <div class="cred-item"><div class="cred-year">2024</div><div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);"><span class="en">Korea Confectionery Association — Master Baker</span><span class="ko">대한제과협회 제과·제빵 명인 선정</span></div></div>
+            <div class="cred-item"><div class="cred-year">2023</div><div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);"><span class="en">Global New Korean Award — Natural Sourdough Category</span><span class="ko">글로벌 신한국인 대상 / 천연발효빵 소비자 평가 부문</span></div></div>
+            <div class="cred-item"><div class="cred-year">2022</div><div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);"><span class="en">Culinary Master · Confectionery &amp; Baking Master</span><span class="ko">조리 명인, 제과·제빵 장인 선정</span></div></div>
+            <div class="cred-item"><div class="cred-year">2019</div><div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);"><span class="en">Seoul Master Baker · Minister of SMEs Award</span><span class="ko">서울시 제과 명인 선정 · 중소벤처기업부 장관상</span></div></div>
+            <div class="cred-item"><div class="cred-year">PhD</div><div style="font-size:.81rem;line-height:1.6;color:var(--brown-dk);"><span class="en">PhD Hotel Management — Honam University</span><span class="ko">호남대학교 호텔경영학과 경영학 박사</span></div></div>
+          </div>
+        </div>
+
+        <!-- Overseas training tags -->
+        <div style="margin-top:2.5rem;padding:1.5rem;background:var(--parchment);border-left:3px solid var(--amber);">
+          <div class="section-label" style="margin-bottom:1rem;">
+            <span class="en">International Training &amp; Research</span>
+            <span class="ko">해외연수 / 시장조사</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇯🇵 <span class="en">Tokyo Confectionery School</span><span class="ko">일본 동경제과학교</span></span>
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇫🇷 <span class="en">Valrhona Chocolate School</span><span class="ko">발로나 초콜릿 학교</span></span>
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇩🇪 <span class="en">Mannheim Bakery School</span><span class="ko">독일 마인하임 제빵학교</span></span>
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇭🇰 <span class="en">The Peninsula Hong Kong</span><span class="ko">홍콩 페닌슐라 호텔</span></span>
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇺🇸 <span class="en">NYC — 120 Cafés &amp; Bakeries</span><span class="ko">뉴욕 맨하튼 카페 120여곳</span></span>
+            <span style="font-size:.73rem;color:var(--brown);padding:.22rem .7rem;background:#fff;border:1px solid var(--tan);">🇬🇧🇫🇷 <span class="en">London &amp; Paris Market Survey</span><span class="ko">런던 &amp; 파리 시장조사</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PRODUCTS ═══ -->
+<section id="products" style="background:var(--choc);padding:7rem 3rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem;margin-bottom:3rem;">
+      <div class="fade-up">
+        <div class="section-label"><span class="en">Dr. Jang's Products</span><span class="ko">닥터장 제품</span></div>
+        <h2 style="margin-top:1rem;">
+          <span class="en section-title" style="font-size:clamp(2.2rem,4.5vw,3.8rem);color:var(--cream);display:block;">Artisan<br><em style="color:var(--amber);">Baked Goods</em></span>
+          <span class="ko section-title-ko" style="font-size:clamp(1.8rem,3.5vw,3rem);color:var(--cream);display:block;">정성으로 만드는<br><em style="color:var(--amber);">수제 베이커리</em></span>
+        </h2>
+      </div>
+      <div class="fade-up d2" style="text-align:right;">
+        <p style="font-size:.78rem;color:rgba(249,244,235,.4);line-height:1.7;">
+          <span class="en">Min. order: 1kg × 2pk / box</span>
+          <span class="ko">최소발주단위: 1kg × 2pk / box</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Tab nav -->
+    <div class="fade-up d1" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="tab-btn active" data-tab="cookies" onclick="switchTab('cookies')">
+        <span class="en">Cookies</span><span class="ko">쿠키류</span>
+      </button>
+      <button class="tab-btn" data-tab="levain" onclick="switchTab('levain')">
+        <span class="en">Lévain &amp; Soft</span><span class="ko">르뱅 &amp; 소프트</span>
+      </button>
+      <button class="tab-btn" data-tab="french" onclick="switchTab('french')">
+        <span class="en">French Pastry</span><span class="ko">프랑스 과자</span>
+      </button>
+      <button class="tab-btn" data-tab="breads" onclick="switchTab('breads')">
+        <span class="en">Artisan Breads</span><span class="ko">식빵 &amp; 번</span>
+      </button>
+      <button class="tab-btn" data-tab="madeleines" onclick="switchTab('madeleines')">
+        <span class="en">Madeleines &amp; Financiers</span><span class="ko">마들렌 &amp; 휘낭시에</span>
+      </button>
+    </div>
+
+    <!-- COOKIES -->
+    <div id="tab-cookies" class="tab-panel active" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.3);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Shelf life 180 days room temp</span><span class="ko">유통기한: 실온 180일</span></div>
+      <div class="product-card fade-up"><span class="p-tag"><span class="en">Signature</span><span class="ko">시그니처</span></span><img src="pictures/red-berry-sable.png" alt="레드베리 샤브레"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Red Berry Sablé</span><span class="p-name-ko ko">레드베리 샤브레</span><span class="p-desc en">Cranberry &amp; red cherry — crisp, fruity, buttery</span><span class="p-desc ko">크랜베리, 레드체리의 상큼함과 샤브레의 고소한 바삭함</span></div></div>
+      <div class="product-card fade-up d1"><img src="pictures/matcha-macadamia.png" alt="녹차 마카다미아쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Matcha Macadamia</span><span class="p-name-ko ko">녹차 마카다미아쿠키</span><span class="p-desc en">Premium matcha &amp; macadamia — clean &amp; nutty</span><span class="p-desc ko">엄선된 녹차의 깊은 풍미와 견과류의 고소함</span></div></div>
+      <div class="product-card fade-up d2"><img src="pictures/oatmeal-cookie.png" alt="오트밀 통밀쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Oatmeal Whole Wheat</span><span class="p-name-ko ko">오트밀 통밀쿠키</span><span class="p-desc en">Wholesome &amp; nutty — wellness snacking done right</span><span class="p-desc ko">건강과 맛을 함께 담은 웰빙 쿠키</span></div></div>
+      <div class="product-card fade-up"><img src="pictures/double-choco-cookie.png" alt="더블 초코쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Double Choco Cookie</span><span class="p-name-ko ko">더블 초코쿠키</span><span class="p-desc en">Chocolate chips &amp; cocoa — rich, crisp, indulgent</span><span class="p-desc ko">초콜릿칩의 달콤함과 코코아의 쌉싸름한 조화</span></div></div>
+      <div class="product-card fade-up d1"><img src="pictures/amandie.png" alt="아만디에"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Amandie</span><span class="p-name-ko ko">아만디에</span><span class="p-desc en">Fresh almonds &amp; cinnamon — premium &amp; crispy</span><span class="p-desc ko">신선한 아몬드와 시나몬 향의 프리미엄 쿠키</span></div></div>
+      <div class="product-card fade-up d2"><img src="https://placehold.co/400x400/1A0F08/D97706?text=Amande+Choc" alt="아망드 쇼콜라"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Amande Chocolat</span><span class="p-name-ko ko">아망드 쇼콜라</span><span class="p-desc en">Almonds &amp; rich dark chocolate — luxurious</span><span class="p-desc ko">아몬드와 풍부한 다크 초콜릿의 고급스러운 조화</span></div></div>
+      <div class="product-card fade-up"><img src="https://placehold.co/400x400/3D2314/FEF3C7?text=Walnut+Choco" alt="호두 초코쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Walnut Choco Cookie</span><span class="p-name-ko ko">호두 초코쿠키</span><span class="p-desc en">Dark chocolate &amp; walnuts — moist and deep</span><span class="p-desc ko">다크 초콜릿과 고소한 호두의 촉촉한 식감</span></div></div>
+      <div class="product-card fade-up d1"><img src="https://placehold.co/400x400/7B6048/FEF3C7?text=Coffee+Sultana" alt="커피 설타나쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Coffee Sultana Cookie</span><span class="p-name-ko ko">커피 설타나쿠키</span><span class="p-desc en">Rich coffee &amp; sweet sultana grapes</span><span class="p-desc ko">진한 커피 향과 설타나 포도의 달콤한 자연미</span></div></div>
+      <div class="product-card fade-up d2"><span class="p-tag"><span class="en">Best Seller</span><span class="ko">베스트셀러</span></span><img src="https://placehold.co/400x400/D4B896/3D2314?text=Coconut+Sable" alt="코코넛 샤브레"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Coconut Sablé</span><span class="p-name-ko ko">코코넛 샤브레</span><span class="p-desc en">Fresh coconut — sweet, crisp, buttery</span><span class="p-desc ko">신선한 코코넛의 달콤하고 바삭한 풍미</span></div></div>
+      <div class="product-card fade-up" style="grid-column:1/3"><img src="https://placehold.co/820x400/5C7A54/FEF3C7?text=Cheese+Pistachio" alt="치즈 피스타치오쿠키" style="aspect-ratio:unset;height:220px;width:100%;object-fit:cover"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Cheese Pistachio Cookie</span><span class="p-name-ko ko">치즈 피스타치오쿠키</span><span class="p-desc en">Rich cheese &amp; crunchy pistachios — deep and distinctive</span><span class="p-desc ko">풍부한 치즈와 아삭한 피스타치오의 특별한 조화</span></div></div>
+    </div>
+
+    <!-- LEVAIN & SOFT -->
+    <div id="tab-levain" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.3);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Lévain: 90 days · Soft: 30 days room temp</span><span class="ko">르뱅: 실온 90일 · 소프트: 실온 30일</span></div>
+      <div class="product-card"><span class="p-tag">Lévain</span><img src="https://placehold.co/400x400/1A0A05/D97706?text=Choco+Levain" alt="초코 르뱅쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Choco Lévain Cookie</span><span class="p-name-ko ko">초코 르뱅쿠키</span><span class="p-desc en">Walnuts &amp; premium chocolate chips — classic</span><span class="p-desc ko">고소한 호두와 프리미엄 초콜릿칩의 클래식한 맛</span></div></div>
+      <div class="product-card"><span class="p-tag">NY Style</span><img src="https://placehold.co/400x400/2C1608/D97706?text=NY+Levain" alt="뉴욕 초콜릿 르뱅쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">NY Chocolate Lévain</span><span class="p-name-ko ko">뉴욕 초콜릿 르뱅쿠키</span><span class="p-desc en">Dark chocolate &amp; nuts — rich, moist, NYC-style</span><span class="p-desc ko">다크 초콜릿과 견과류의 깊고 풍성한 맛</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Gluten Free</span><span class="ko">글루텐 프리</span></span><img src="https://placehold.co/400x400/8B7045/FEF3C7?text=Oatmeal+Nutrition" alt="오트밀 영양쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Oatmeal Nutrition Cookie</span><span class="p-name-ko ko">오트밀 영양쿠키</span><span class="p-desc en">Superfood oatmeal · no butter · gluten free</span><span class="p-desc ko">슈퍼푸드 오트밀 · 버터 無 · 글루텐 프리</span></div></div>
+      <div class="product-card"><span class="p-tag">Soft</span><img src="https://placehold.co/400x400/E8D860/3D2314?text=Soft+Lemon" alt="소프트 레몬쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Soft Lemon Cookie</span><span class="p-name-ko ko">소프트 레몬쿠키</span><span class="p-desc en">Fresh lemon — bright, moist, melt-in-mouth</span><span class="p-desc ko">신선한 레몬향의 촉촉하고 부드러운 디저트</span></div></div>
+      <div class="product-card"><span class="p-tag">Soft</span><img src="https://placehold.co/400x400/3D6B3A/FEF3C7?text=Soft+Matcha" alt="소프트 녹차쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Soft Matcha Cookie</span><span class="p-name-ko ko">소프트 녹차쿠키</span><span class="p-desc en">Premium matcha powder — clean flavor, soft texture</span><span class="p-desc ko">고급 녹차 가루의 깔끔한 풍미가 가득</span></div></div>
+    </div>
+
+    <!-- FRENCH PASTRY -->
+    <div id="tab-french" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.3);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Galette: 10 days · Brownie / Biscotti / Granola: 10 days room temp</span><span class="ko">갈레트: 실온 10일 · 기타: 실온 10일</span></div>
+      <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/D4A853/3D2314?text=Galette+Vanilla" alt="갈레트 바닐라"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Galette Vanilla</span><span class="p-name-ko ko">갈레트 바닐라</span><span class="p-desc en">Natural vanilla &amp; butter — French tradition, crisp outside, moist inside</span><span class="p-desc ko">천연 바닐라와 버터의 깊고 진한 프랑스 전통 과자</span></div></div>
+      <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/2C1810/D97706?text=Galette+Choco" alt="갈레트 초콜릿"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Galette Chocolat</span><span class="p-name-ko ko">갈레트 초콜릿</span><span class="p-desc en">Rich chocolate — French galette at its finest</span><span class="p-desc ko">진한 초콜릿 풍미의 프랑스 전통 갈레트</span></div></div>
+      <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/C49A3C/2C1810?text=Florentine" alt="플로랑땡"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Florentine</span><span class="p-name-ko ko">플로랑땡</span><span class="p-desc en">Sliced almonds, raisins &amp; caramel — crisp luxury</span><span class="p-desc ko">아몬드 슬라이스와 캐러멜의 바삭한 고급 디저트</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/400x400/1A0808/D97706?text=Brownie" alt="브라우니"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Brownie</span><span class="p-name-ko ko">브라우니</span><span class="p-desc en">Round &amp; cute — deep chocolate, perfectly moist</span><span class="p-desc ko">동그란 귀여운 모양, 깊은 초콜릿과 촉촉한 식감</span></div></div>
+      <div class="product-card"><span class="p-tag">Italian</span><img src="https://placehold.co/400x400/A0855E/FEF3C7?text=Biscotti" alt="비스코티"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Biscotti</span><span class="p-name-ko ko">비스코티</span><span class="p-desc en">Double-baked Italian classic — almonds &amp; dried fruit</span><span class="p-desc ko">두 번 구워낸 이탈리아 전통 — 아몬드와 건과일</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Healthy</span><span class="ko">건강</span></span><img src="https://placehold.co/400x400/8B7A52/FEF3C7?text=Granola+Bar" alt="그래놀라바"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Granola Bar</span><span class="p-name-ko ko">그래놀라바</span><span class="p-desc en">Oats, nuts &amp; dried fruit — the perfect energy snack</span><span class="p-desc ko">귀리·견과류·건과일의 건강한 에너지 스낵</span></div></div>
+    </div>
+
+    <!-- ARTISAN BREADS -->
+    <div id="tab-breads" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.3);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 180ea/box (rolls) · 8ea/box (loaves) · 60ea/box (buns)</span><span class="ko">냉동 90일 · 최소발주 180ea(롤) · 8ea(식빵) · 60ea(번)</span></div>
+      <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/D4A840/3D2314?text=Brioche+Small" alt="정통 브리오쉬(소)"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Brioche (Small)</span><span class="p-name-ko ko">정통 브리오쉬 (소)</span><span class="p-desc en">Natural yeast · soft, moist French brioche</span><span class="p-desc ko">천연 효모로 만든 촉촉하고 부드러운 프랑스 브리오쉬</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/400x400/C49060/FEF3C7?text=Soft+Roll" alt="소프트롤"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Soft Roll</span><span class="p-name-ko ko">소프트롤</span><span class="p-desc en">Pillowy soft — perfect for breakfast or snacking</span><span class="p-desc ko">입안 가득 퍼지는 부드러운 식감의 소프트롤</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/400x400/EEE8D8/3D2314?text=English+Muffin" alt="잉글리쉬 머핀"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">English Muffin</span><span class="p-name-ko ko">잉글리쉬 머핀</span><span class="p-desc en">Crisp outside, chewy inside — classic British recipe</span><span class="p-desc ko">바삭한 겉면과 쫄깃한 속살 — 전통 영국식</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Natural Yeast</span><span class="ko">천연효모</span></span><img src="https://placehold.co/400x400/D4A855/2C1810?text=Milk+Bread" alt="천연효모 우유식빵"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Milk Bread (Natural Yeast)</span><span class="p-name-ko ko">천연효모 우유식빵</span><span class="p-desc en">Natural sourdough · milk-enriched · soft &amp; chewy</span><span class="p-desc ko">천연 효모로 발효한 촉촉하고 쫄깃한 우유 식빵</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Natural Yeast</span><span class="ko">천연효모</span></span><img src="https://placehold.co/400x400/8B7550/FEF3C7?text=Grain+Bread" alt="천연효모 곡물식빵"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">5-Grain Bread (Natural Yeast)</span><span class="p-name-ko ko">천연효모 곡물식빵</span><span class="p-desc en">5 whole grains · nutritious, nutty, wholesome</span><span class="p-desc ko">5가지 통곡물의 건강과 영양을 담은 최고의 식빵</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/400x400/D4A840/3D2314?text=Brioche+Large" alt="정통 브리오쉬 식빵(대)"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Brioche Loaf (Large)</span><span class="p-name-ko ko">정통 브리오쉬 식빵 (대)</span><span class="p-desc en">The classic French loaf — buttery, soft, fragrant</span><span class="p-desc ko">전통적인 프랑스 빵의 맛과 풍미를 담은 식빵</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Artisan</span><span class="ko">수제</span></span><img src="https://placehold.co/400x400/B8925C/FEF3C7?text=Sesame+Bun" alt="수제 햄버거번(참깨)"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Hamburger Bun — Sesame</span><span class="p-name-ko ko">수제 햄버거번 (참깨)</span><span class="p-desc en">Natural yeast · crisp exterior, soft &amp; chewy inside</span><span class="p-desc ko">천연 효모 발효 · 바삭한 겉 · 부드럽고 쫄깃한 속</span></div></div>
+      <div class="product-card"><span class="p-tag"><span class="en">Healthy</span><span class="ko">건강</span></span><img src="https://placehold.co/400x400/C4A870/2C1810?text=Oatmeal+Bun" alt="수제 햄버거번(오트밀)"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Hamburger Bun — Oatmeal</span><span class="p-name-ko ko">수제 햄버거번 (오트밀)</span><span class="p-desc en">Oatmeal-topped artisan bun — wholesome &amp; flavourful</span><span class="p-desc ko">건강한 오트밀 토핑의 고소하고 풍미 있는 번</span></div></div>
+    </div>
+
+    <!-- MADELEINES & FINANCIERS -->
+    <div id="tab-madeleines" class="tab-panel" style="grid-template-columns:repeat(4,1fr);gap:1.25rem;">
+      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.3);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 50ea / box</span><span class="ko">냉동 90일 · 최소발주단위 50ea / box</span></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/E8C870/3D2314?text=Lime+Mad" alt="라임 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Lime Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">라임 마들렌</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/4A6741/FEF3C7?text=Matcha+Mad" alt="녹차 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Matcha Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">녹차 마들렌</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/5C3D2E/D4A855?text=Tea+Mad" alt="홍차 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Black Tea Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">홍차 마들렌</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/1A0808/D97706?text=Choco+Mad" alt="초코 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Choco Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">초코 마들렌</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/C49A50/3D2314?text=Pecan+Fin" alt="피칸 휘낭시에"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Pecan Financier</span><span class="p-name-ko ko" style="font-size:.85rem;">피칸 휘낭시에</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/D4B880/3D2314?text=Plain+Fin" alt="플레인 휘낭시에"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Plain Financier</span><span class="p-name-ko ko" style="font-size:.85rem;">플레인 휘낭시에</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/E8A830/3D2314?text=Orange+Bar" alt="바통 오랑쥬"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Baton Orange</span><span class="p-name-ko ko" style="font-size:.85rem;">바통 오랑쥬</span></div></div>
+      <div class="product-card"><img src="https://placehold.co/300x300/1A0808/D97706?text=Choco+Bar" alt="바통 쇼콜라"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Baton Chocolat</span><span class="p-name-ko ko" style="font-size:.85rem;">바통 쇼콜라</span></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PARTNERS ═══ -->
+<section id="partners" style="background:#1A0F08;padding:6rem 0 5rem;">
+  <div style="max-width:1200px;margin:0 auto 3rem;padding:0 3rem;" class="fade-up">
+    <div class="section-label"><span class="en">Partnership History</span><span class="ko">파트너십 이력</span></div>
+    <h2 style="margin-top:1rem;">
+      <span class="en section-title" style="font-size:clamp(2rem,4vw,3.2rem);color:var(--cream);display:block;">Trusted by Korea's<br><em style="color:var(--amber);">Finest Hotels</em></span>
+      <span class="ko section-title-ko" style="font-size:clamp(1.7rem,3.2vw,2.8rem);color:var(--cream);display:block;">대한민국 최고의<br><em style="color:var(--amber);">특급 호텔 파트너</em></span>
+    </h2>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto 4rem;padding:0 3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+    <div class="fade-up" style="padding:2rem;border:1px solid rgba(215,119,6,.12);">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--amber);border-bottom:1px solid rgba(215,119,6,.18);padding-bottom:.65rem;margin-bottom:1rem;">2015</div>
+      <div style="font-size:.8rem;color:rgba(249,244,235,.55);line-height:1.7;">Sheraton Palace Hotel Seoul Gangnam</div>
+    </div>
+    <div class="fade-up d1" style="padding:2rem;border:1px solid rgba(215,119,6,.12);">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--amber);border-bottom:1px solid rgba(215,119,6,.18);padding-bottom:.65rem;margin-bottom:1rem;">2016–2019</div>
+      <div style="font-size:.8rem;color:rgba(249,244,235,.55);line-height:1.9;">
+        현대자동차 본사 · 신세계 백화점 본점<br>Novotel Ambassador Gangnam<br>Le Meridien Hotel Seoul<br>카페 진정성 티라미수
+      </div>
+    </div>
+    <div class="fade-up d2" style="padding:2rem;border:1px solid rgba(215,119,6,.12);">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--amber);border-bottom:1px solid rgba(215,119,6,.18);padding-bottom:.65rem;margin-bottom:1rem;">2020–2025</div>
+      <div style="font-size:.73rem;color:rgba(249,244,235,.45);line-height:1.8;">Conrad · Four Seasons · Park Hyatt · Grand Hyatt · Grand Intercontinental Parnas · Westin Parnas · Andaz Gangnam · Josun Palace · JW Marriott · Fairmont Ambassador · Banyantree · Inspire Resort · Mondrian · and more</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid rgba(215,119,6,.08);border-bottom:1px solid rgba(215,119,6,.08);padding:1.2rem 0;overflow:hidden;">
+    <div class="marquee-track">
+      <div class="partner-item">Conrad Hotel Seoul</div><div class="partner-item">Four Seasons Seoul</div><div class="partner-item">Park Hyatt Seoul</div><div class="partner-item">Grand Hyatt Seoul</div><div class="partner-item">Grand Intercontinental Parnas</div><div class="partner-item">Westin Seoul Parnas</div><div class="partner-item">JW Marriott Seoul</div><div class="partner-item">Fairmont Ambassador Seoul</div><div class="partner-item">Andaz Seoul Gangnam</div><div class="partner-item">Josun Palace Hotel</div><div class="partner-item">Banyantree Seoul</div><div class="partner-item">Inspire Resort</div><div class="partner-item">Mondrian Itaewon</div><div class="partner-item">Dragon City Hotel</div>
+      <!-- duplicate for seamless loop -->
+      <div class="partner-item">Conrad Hotel Seoul</div><div class="partner-item">Four Seasons Seoul</div><div class="partner-item">Park Hyatt Seoul</div><div class="partner-item">Grand Hyatt Seoul</div><div class="partner-item">Grand Intercontinental Parnas</div><div class="partner-item">Westin Seoul Parnas</div><div class="partner-item">JW Marriott Seoul</div><div class="partner-item">Fairmont Ambassador Seoul</div><div class="partner-item">Andaz Seoul Gangnam</div><div class="partner-item">Josun Palace Hotel</div><div class="partner-item">Banyantree Seoul</div><div class="partner-item">Inspire Resort</div><div class="partner-item">Mondrian Itaewon</div><div class="partner-item">Dragon City Hotel</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ HACCP ═══ -->
+<section id="certification" style="background:var(--parchment);padding:7rem 3rem;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div class="fade-up" style="text-align:center;margin-bottom:4rem;">
+      <div class="section-label"><span class="en">HACCP Certification</span><span class="ko">위생안전 인증</span></div>
+      <h2 style="margin:1rem auto;max-width:620px;">
+        <span class="en section-title" style="font-size:clamp(1.6rem,3vw,2.4rem);color:var(--brown-dk);display:block;">"Dr. Jang Factory is a<br>HACCP-certified facility."</span>
+        <span class="ko section-title-ko" style="font-size:clamp(1.4rem,2.5vw,2rem);color:var(--brown-dk);display:block;">"(주)닥터장팩토리는<br>위생안전 HACCP 인증업체입니다."</span>
+      </h2>
+      <div class="deco-line" style="max-width:180px;margin:2rem auto;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2.5rem;max-width:740px;margin:0 auto 4rem;">
+      <div class="fade-up" style="text-align:center;">
+        <div class="cert-ring" style="margin:0 auto 1.25rem;">
+          <div style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--amber);">HA</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Hazard Analysis</span><span class="ko">위해요소분석</span></div>
+        </div>
+        <p style="font-size:.78rem;line-height:1.7;color:var(--brown);">
+          <span class="en">Biological, chemical &amp; physical hazard analysis of all ingredients and processes</span>
+          <span class="ko">원료와 공정에서 발생가능한 생물학적·화학적·물리적 위해요소 분석</span>
+        </p>
+      </div>
+      <div class="fade-up d1" style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--amber);">+</div>
+      <div class="fade-up d2" style="text-align:center;">
+        <div class="cert-ring" style="margin:0 auto 1.25rem;">
+          <div style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--amber);">CCP</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Critical Control Point</span><span class="ko">중요관리점</span></div>
+        </div>
+        <p style="font-size:.78rem;line-height:1.7;color:var(--brown);">
+          <span class="en">Key process steps to prevent, eliminate, or reduce hazards to acceptable levels</span>
+          <span class="ko">위해요소를 예방·제거 또는 허용수준으로 감소시킬 수 있는 공정이나 단계를 중점관리</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="fade-up d3" style="text-align:center;margin-bottom:4.5rem;">
+      <div style="display:inline-flex;align-items:center;gap:1.5rem;padding:1.75rem 2.5rem;background:var(--choc);border:1px solid rgba(215,119,6,.2);">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0DB7A8,#0A8F82);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <div style="font-family:'Cinzel',serif;font-size:.75rem;font-weight:700;color:#fff;line-height:1.2;text-align:center;">HACCP</div>
+        </div>
+        <div style="text-align:left;">
+          <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);">안전관리인증</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);margin-top:.15rem;"><span class="en">Ministry of Food &amp; Drug Safety Certified</span><span class="ko">식품의약품안전처 인증</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+      <div style="padding:2rem;border:1px solid var(--tan);">
+        <div class="section-label" style="margin-bottom:1rem;"><span class="en">Patent</span><span class="ko">특허</span></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.7rem;">
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;">—</span><span class="en">Patent No. 10-2271124 (Natural Sourdough Manufacturing)</span><span class="ko">특허 제10-2271124 호 (천연 발효빵 제조기술)</span></li>
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;">—</span><span class="en">Trademark Registration No. 40-1728257</span><span class="ko">상표등록증 제40-1728257 호</span></li>
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;">—</span><span class="en">Functional ingredient manufacturing technology</span><span class="ko">특수소재 사용기능성 상품 제조기술 보유</span></li>
+        </ul>
+      </div>
+      <div style="padding:2rem;border:1px solid var(--tan);">
+        <div class="section-label" style="margin-bottom:1rem;"><span class="en">Awards</span><span class="ko">수상</span></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.7rem;">
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;min-width:2.2rem;">2024</span><span class="en">Korea Confectionery Association — Master Baker</span><span class="ko">대한제과협회 제과·제빵 명인 선정</span></li>
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;min-width:2.2rem;">2023</span><span class="en">Global New Korean Award — Sourdough Category</span><span class="ko">글로벌 신한국인 대상 / 천연발효빵 소비자 평가 부문</span></li>
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;min-width:2.2rem;">2019</span><span class="en">Seoul Master Baker · Minister of SMEs Award</span><span class="ko">서울시 제과 명인 · 중소벤처기업부 장관상</span></li>
+          <li style="font-size:.81rem;line-height:1.5;color:var(--brown-dk);display:flex;gap:.75rem;"><span style="color:var(--amber);flex-shrink:0;min-width:2.2rem;">2007</span><span class="en">National Master Baker — Korea Confectionery Association</span><span class="ko">사단법인 대한민국 제과기능장</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ BOOKS & THESIS ═══ -->
+<section style="background:var(--choc);padding:6rem 3rem;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+    <div class="fade-up">
+      <div class="section-label"><span class="en">Books &amp; Thesis</span><span class="ko">저서 및 논문</span></div>
+      <h2 style="margin:1rem 0 2.5rem;">
+        <span class="en section-title" style="font-size:clamp(1.8rem,3.5vw,3rem);color:var(--cream);display:block;">Academic &amp;<br><em style="color:var(--amber);">Published Works</em></span>
+        <span class="ko section-title-ko" style="font-size:clamp(1.5rem,3vw,2.4rem);color:var(--cream);display:block;">학술 연구 및<br><em style="color:var(--amber);">출판 저서</em></span>
+      </h2>
+      <div style="border-bottom:1px solid rgba(215,119,6,.12);padding-bottom:2rem;margin-bottom:2rem;">
+        <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Doctoral Thesis</span><span class="ko">박사학위 논문</span></div>
+        <div style="display:flex;flex-direction:column;gap:.9rem;">
+          <div style="padding:1rem 1.25rem;border-left:2px solid var(--amber);background:rgba(215,119,6,.05);font-size:.82rem;line-height:1.65;color:rgba(249,244,235,.7);">호텔기업의 고용관계 특성이 직무만족, 조직몰입, 조직시민행동에 미치는 영향</div>
+          <div style="padding:1rem 1.25rem;border-left:2px solid var(--amber);background:rgba(215,119,6,.05);font-size:.82rem;line-height:1.65;color:rgba(249,244,235,.7);font-style:italic;">Effect of Rice Composite Flours on the Physicochemical Storability of Bagel Prepared Mixes</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Publications</span><span class="ko">저서</span></div>
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+          <div style="display:flex;gap:1rem;font-size:.82rem;color:rgba(249,244,235,.65);align-items:center;"><span style="width:4px;height:4px;background:var(--amber);border-radius:50%;flex-shrink:0;"></span>제과제빵케익 데커레이션 테크닉</div>
+          <div style="display:flex;gap:1rem;font-size:.82rem;color:rgba(249,244,235,.65);align-items:center;"><span style="width:4px;height:4px;background:var(--amber);border-radius:50%;flex-shrink:0;"></span>프로 파티시에를 위한 디저트 &amp; 초콜릿</div>
+          <div style="display:flex;gap:1rem;font-size:.82rem;color:rgba(249,244,235,.65);align-items:center;"><span style="width:4px;height:4px;background:var(--amber);border-radius:50%;flex-shrink:0;"></span>프로 파티시에를 위한 초콜릿의 세계</div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up d2" style="display:flex;gap:1.5rem;align-items:flex-end;">
+      <img src="https://placehold.co/140x190/1A0F08/D97706?text=Book+1" alt="저서 1" style="border:1px solid rgba(215,119,6,.2);">
+      <img src="https://placehold.co/140x190/2C1810/F9F4EB?text=Book+2" alt="저서 2" style="margin-bottom:1.5rem;border:1px solid rgba(215,119,6,.2);">
+      <img src="https://placehold.co/140x190/3D2314/D97706?text=Book+3" alt="저서 3" style="border:1px solid rgba(215,119,6,.2);">
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SPECIAL GIFTS ═══ -->
+<section style="background:var(--cream);padding:7rem 3rem;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+    <div class="fade-up" style="position:relative;">
+      <img src="https://placehold.co/580x460/8B6347/FEF3C7?text=Special+Gifts" alt="Special Gifts" style="width:100%;object-fit:cover;">
+      <div style="position:absolute;top:-18px;right:-18px;padding:1.1rem 1.6rem;background:var(--amber);">
+        <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--choc);"><span class="en">Custom Order</span><span class="ko">맞춤 제작</span></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--choc);margin-top:.15rem;"><span class="en">Gift Orders</span><span class="ko">답례품 제작</span></div>
+      </div>
+    </div>
+    <div class="fade-up d2">
+      <div class="section-label"><span class="en">Special Gifts</span><span class="ko">특별 선물</span></div>
+      <h2 style="margin:1rem 0 1.5rem;">
+        <span class="en section-title" style="font-size:clamp(1.8rem,3.2vw,2.8rem);color:var(--brown-dk);display:block;">Gifts for<br><em style="color:var(--amber);">Special Occasions</em></span>
+        <span class="ko section-title-ko" style="font-size:clamp(1.5rem,2.8vw,2.4rem);color:var(--brown-dk);display:block;">특별한 날을 위한<br><em style="color:var(--amber);">특별한 답례품</em></span>
+      </h2>
+      <p style="font-size:.87rem;line-height:1.85;color:var(--brown);margin-bottom:1.2rem;">
+        <span class="en">Weddings, first birthday celebrations, corporate events — looking for a unique way to express gratitude? Dr. Jang Factory's handcrafted cookies are made with the care of a National Master Baker.</span>
+        <span class="ko">결혼식, 돌잔치, 기업 행사와 같은 소중한 날, 감사의 마음을 전하는 남다른 방법을 찾고 계신가요? 닥터장 팩토리의 수제쿠키는 국가대표 명인·장인·기능장의 손길로 정성껏 만들어집니다.</span>
+      </p>
+      <div style="padding:1.25rem;background:var(--parchment);border-left:3px solid var(--amber);margin-bottom:2rem;display:flex;gap:1rem;align-items:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;color:var(--amber)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.4 1.84 2 2 0 012.38 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.55a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92"/></svg>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.3rem;"><span class="en">Order Enquiries</span><span class="ko">답례품 제작 문의</span></div>
+          <div style="font-family:'Lora',serif;font-size:.88rem;color:var(--brown-dk);">02-2163-6525 · 010-3364-8885</div>
+        </div>
+      </div>
+      <a href="#contact" class="btn-amber">
+        <span class="en">Get in Touch</span><span class="ko">문의하기</span>
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h13M9 1l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CONTACT / FOOTER ═══ -->
+<footer id="contact" style="background:var(--choc);padding:7rem 3rem 4rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;padding-bottom:4rem;border-bottom:1px solid rgba(215,119,6,.1);">
+      <div class="fade-up">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;">
+          <svg width="42" height="42" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="48" stroke="#D97706" stroke-width="2" fill="none"/>
+            <path d="M50 22L50 72 M50 28C44 30 40 34 40 40 M50 28C56 30 60 34 60 40 M50 40C44 42 40 46 40 52 M50 40C56 42 60 46 60 52 M50 52C44 54 40 58 40 63 M50 52C56 54 60 58 60 63" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <circle cx="50" cy="72" r="3.5" fill="#D97706"/>
+          </svg>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--cream);">Dr. Jang's</div>
+            <div style="font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.25em;color:var(--amber);">BREAD FACTORY</div>
+          </div>
+        </div>
+        <p style="font-size:.84rem;line-height:1.8;color:rgba(249,244,235,.45);max-width:320px;">
+          <span class="en">A premium handcrafted bakery by Korea's National Master Baker Jang Hyun-ho — 40+ years of craft, baked into every piece.</span>
+          <span class="ko">대한민국 제과명인 장현호 기능장의 40여 년 경험과 열정으로 만드는 프리미엄 수제 베이커리.</span>
+        </p>
+        <div style="margin-top:2rem;">
+          <a href="https://www.youtube.com/@drj_factory" target="_blank" rel="noopener"
+            style="width:36px;height:36px;border:1px solid rgba(215,119,6,.3);display:inline-flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);transition:all .2s ease;text-decoration:none;"
+            onmouseover="this.style.borderColor='#D97706';this.style.color='#D97706'"
+            onmouseout="this.style.borderColor='rgba(215,119,6,.3)';this.style.color='rgba(255,255,255,.4)'"
+            aria-label="YouTube">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19s-.21-1.47-.85-2.11c-.81-.85-1.72-.86-2.14-.91C15.74 4 12 4 12 4s-3.74 0-6.59.17c-.42.05-1.33.05-2.14.91-.64.64-.85 2.11-.85 2.11S2.25 8.9 2.25 10.6v1.6c0 1.7.17 3.41.17 3.41s.21 1.47.85 2.11c.81.85 1.89.82 2.37.91C7.08 18.81 12 18.86 12 18.86s3.74-.01 6.59-.18c.42-.05 1.33-.06 2.14-.91.64-.64.85-2.11.85-2.11s.17-1.71.17-3.41v-1.6c0-1.7-.17-3.41-.17-3.41zM9.75 14.86V9.14l5.75 2.86-5.75 2.86z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-up d2">
+        <div class="section-label" style="margin-bottom:2rem;"><span class="en">How to reach us</span><span class="ko">연락처</span></div>
+        <div style="display:flex;flex-direction:column;gap:1.75rem;">
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Address</span><span class="ko">주소</span></div>
+            <p style="font-size:.84rem;line-height:1.75;color:rgba(249,244,235,.65);">(주)닥터장팩토리<br>서울시 금천구 가마산로 96, 대륭테크노타운 8차 406호</p>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Phone</span><span class="ko">전화</span></div>
+            <a href="tel:0221636525" class="footer-link">02-2163-6525</a>
+            <span style="color:rgba(255,255,255,.2);margin:0 .5rem;">/</span>
+            <a href="tel:01033648885" class="footer-link">010-3364-8885</a>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;">E-mail</div>
+            <a href="mailto:drj_factory@naver.com" class="footer-link">drj_factory@naver.com</a><br>
+            <a href="mailto:cakebank@daum.net" class="footer-link" style="display:inline-block;margin-top:.2rem;">cakebank@daum.net</a>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;">YouTube</div>
+            <a href="https://www.youtube.com/@drj_factory" target="_blank" rel="noopener" class="footer-link">www.youtube.com/@drj_factory</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-top:2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+      <p style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.18);">
+        © 2026 (주)닥터장팩토리 · Dr. Jang's Bread Factory. All rights reserved.
+      </p>
+      <div style="display:flex;align-items:center;gap:.65rem;">
+        <div style="width:5px;height:5px;background:var(--amber);border-radius:50%;animation:pulse 2s ease infinite;"></div>
+        <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(215,119,6,.55);">HACCP Certified · 안전관리인증</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ── Nav scroll ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Language toggle ──
+  function toggleLang() {
+    const html = document.documentElement;
+    if (html.classList.contains('lang-en')) {
+      html.classList.replace('lang-en', 'lang-ko');
+      html.lang = 'ko';
+    } else {
+      html.classList.replace('lang-ko', 'lang-en');
+      html.lang = 'en';
+    }
+  }
+
+  // ── Product tabs ──
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`[data-tab="${name}"]`).classList.add('active');
+    const panel = document.getElementById('tab-' + name);
+    panel.classList.add('active');
+    // Re-trigger animations for newly visible cards
+    panel.querySelectorAll('.fade-up').forEach(el => {
+      el.classList.remove('visible');
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+    });
+  }
+
+  // ── Scroll reveal ──
+  // Puppeteer/headless: navigator.webdriver is true → reveal everything immediately for fullPage screenshots
+  if (navigator.webdriver) {
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  } else {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  }
+</script>
+</body>
+</html>
