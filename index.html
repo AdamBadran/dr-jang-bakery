@@ -76,7 +76,7 @@
       color:rgba(255,255,255,.65); text-decoration:none; transition:color .2s ease;
     }
     html.lang-ko .nav-links a {
-      font-family:'Noto Serif KR',serif; font-size:.82rem; letter-spacing:.06em; text-transform:none;
+      font-family:'Noto Serif KR',serif; font-size:1.14rem; letter-spacing:0; text-transform:none;
     }
     .nav-links a:hover { color:var(--amber); }
     .nav-links a:focus-visible { outline:2px solid var(--amber); outline-offset:4px; }
@@ -88,6 +88,21 @@
       box-shadow:0 2px 12px rgba(215,119,6,.4);
     }
     html.lang-ko .nav-cta { font-family:'Noto Serif KR',serif; font-size:.92rem; letter-spacing:0; }
+
+    /* ── Korean 58.6% size overrides ── */
+    html.lang-ko .hero-badge        { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
+    html.lang-ko .hero-sub          { font-size:1.14rem; letter-spacing:.03em; }
+    html.lang-ko .hero-scroll       { font-size:.79rem; }
+    html.lang-ko .section-label     { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:.02em; }
+    html.lang-ko .btn-ghost         { font-size:1.03rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
+    html.lang-ko .tab-btn           { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
+    html.lang-ko .cred-badge        { font-size:.73rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
+    html.lang-ko .shelf-label       { font-size:1.03rem; }
+    html.lang-ko .cert-ring-text    { font-size:1.24rem; }
+    html.lang-ko .cert-badge-label  { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
+    html.lang-ko .subsection-label  { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
+    html.lang-ko .gift-tag-label    { font-size:.82rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
+    html.lang-ko .order-inquiry-label { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.02em; }
     .nav-cta:hover { background:var(--amber-lt); }
     .nav-cta:active { opacity:.85; }
 
@@ -470,11 +485,11 @@
             CEO &amp; <span class="en">Master Baker</span><span class="ko">대한민국 제과기능장</span>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:.4rem;">
-            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과기능장</span>
-            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">서울시 제과 명인</span>
-            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">조리 명인</span>
-            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과제빵 장인</span>
-            <span style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">PhD</span>
+            <span class="cred-badge" style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과기능장</span>
+            <span class="cred-badge" style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">서울시 제과 명인</span>
+            <span class="cred-badge" style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">조리 명인</span>
+            <span class="cred-badge" style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">제과제빵 장인</span>
+            <span class="cred-badge" style="font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.1em;padding:.28rem .6rem;border:1px solid rgba(215,119,6,.4);color:var(--amber);">PhD</span>
           </div>
         </div>
       </div>
@@ -600,7 +615,7 @@
 
     <!-- COOKIES -->
     <div id="tab-cookies" class="tab-panel active" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Shelf life 180 days room temp</span><span class="ko">유통기한: 실온 180일</span></div>
+      <div class="shelf-label" style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Shelf life 180 days room temp</span><span class="ko">유통기한: 실온 180일</span></div>
       <div class="product-card fade-up"><span class="p-tag"><span class="en">Signature</span><span class="ko">시그니처</span></span><img src="pictures/red-berry-sable.png" alt="레드베리 샤브레"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Red Berry Sablé</span><span class="p-name-ko ko">레드베리 샤브레</span><span class="p-desc en">Cranberry &amp; red cherry — crisp, fruity, buttery</span><span class="p-desc ko">크랜베리, 레드체리의 상큼함과 샤브레의 고소한 바삭함</span></div></div>
       <div class="product-card fade-up d1"><img src="pictures/matcha-macadamia.png" alt="녹차 마카다미아쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Matcha Macadamia</span><span class="p-name-ko ko">녹차 마카다미아쿠키</span><span class="p-desc en">Premium matcha &amp; macadamia — clean &amp; nutty</span><span class="p-desc ko">엄선된 녹차의 깊은 풍미와 견과류의 고소함</span></div></div>
       <div class="product-card fade-up d2"><img src="pictures/oatmeal-cookie.png" alt="오트밀 통밀쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Oatmeal Whole Wheat</span><span class="p-name-ko ko">오트밀 통밀쿠키</span><span class="p-desc en">Wholesome &amp; nutty — wellness snacking done right</span><span class="p-desc ko">건강과 맛을 함께 담은 웰빙 쿠키</span></div></div>
@@ -615,7 +630,7 @@
 
     <!-- LEVAIN & SOFT -->
     <div id="tab-levain" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Lévain: 90 days · Soft: 30 days room temp</span><span class="ko">르뱅: 실온 90일 · 소프트: 실온 30일</span></div>
+      <div class="shelf-label" style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Lévain: 90 days · Soft: 30 days room temp</span><span class="ko">르뱅: 실온 90일 · 소프트: 실온 30일</span></div>
       <div class="product-card"><span class="p-tag">Lévain</span><img src="https://placehold.co/400x400/1A0A05/D97706?text=Choco+Levain" alt="초코 르뱅쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Choco Lévain Cookie</span><span class="p-name-ko ko">초코 르뱅쿠키</span><span class="p-desc en">Walnuts &amp; premium chocolate chips — classic</span><span class="p-desc ko">고소한 호두와 프리미엄 초콜릿칩의 클래식한 맛</span></div></div>
       <div class="product-card"><span class="p-tag">NY Style</span><img src="https://placehold.co/400x400/2C1608/D97706?text=NY+Levain" alt="뉴욕 초콜릿 르뱅쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">NY Chocolate Lévain</span><span class="p-name-ko ko">뉴욕 초콜릿 르뱅쿠키</span><span class="p-desc en">Dark chocolate &amp; nuts — rich, moist, NYC-style</span><span class="p-desc ko">다크 초콜릿과 견과류의 깊고 풍성한 맛</span></div></div>
       <div class="product-card"><span class="p-tag"><span class="en">Gluten Free</span><span class="ko">글루텐 프리</span></span><img src="https://placehold.co/400x400/8B7045/FEF3C7?text=Oatmeal+Nutrition" alt="오트밀 영양쿠키"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Oatmeal Nutrition Cookie</span><span class="p-name-ko ko">오트밀 영양쿠키</span><span class="p-desc en">Superfood oatmeal · no butter · gluten free</span><span class="p-desc ko">슈퍼푸드 오트밀 · 버터 無 · 글루텐 프리</span></div></div>
@@ -625,7 +640,7 @@
 
     <!-- FRENCH PASTRY -->
     <div id="tab-french" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Galette: 10 days · Brownie / Biscotti / Granola: 10 days room temp</span><span class="ko">갈레트: 실온 10일 · 기타: 실온 10일</span></div>
+      <div class="shelf-label" style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Galette: 10 days · Brownie / Biscotti / Granola: 10 days room temp</span><span class="ko">갈레트: 실온 10일 · 기타: 실온 10일</span></div>
       <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/D4A853/3D2314?text=Galette+Vanilla" alt="갈레트 바닐라"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Galette Vanilla</span><span class="p-name-ko ko">갈레트 바닐라</span><span class="p-desc en">Natural vanilla &amp; butter — French tradition, crisp outside, moist inside</span><span class="p-desc ko">천연 바닐라와 버터의 깊고 진한 프랑스 전통 과자</span></div></div>
       <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/2C1810/D97706?text=Galette+Choco" alt="갈레트 초콜릿"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Galette Chocolat</span><span class="p-name-ko ko">갈레트 초콜릿</span><span class="p-desc en">Rich chocolate — French galette at its finest</span><span class="p-desc ko">진한 초콜릿 풍미의 프랑스 전통 갈레트</span></div></div>
       <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/C49A3C/2C1810?text=Florentine" alt="플로랑땡"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Florentine</span><span class="p-name-ko ko">플로랑땡</span><span class="p-desc en">Sliced almonds, raisins &amp; caramel — crisp luxury</span><span class="p-desc ko">아몬드 슬라이스와 캐러멜의 바삭한 고급 디저트</span></div></div>
@@ -636,7 +651,7 @@
 
     <!-- ARTISAN BREADS -->
     <div id="tab-breads" class="tab-panel" style="grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 180ea/box (rolls) · 8ea/box (loaves) · 60ea/box (buns)</span><span class="ko">냉동 90일 · 최소발주 180ea(롤) · 8ea(식빵) · 60ea(번)</span></div>
+      <div class="shelf-label" style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 180ea/box (rolls) · 8ea/box (loaves) · 60ea/box (buns)</span><span class="ko">냉동 90일 · 최소발주 180ea(롤) · 8ea(식빵) · 60ea(번)</span></div>
       <div class="product-card"><span class="p-tag">French</span><img src="https://placehold.co/400x400/D4A840/3D2314?text=Brioche+Small" alt="정통 브리오쉬(소)"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Brioche (Small)</span><span class="p-name-ko ko">정통 브리오쉬 (소)</span><span class="p-desc en">Natural yeast · soft, moist French brioche</span><span class="p-desc ko">천연 효모로 만든 촉촉하고 부드러운 프랑스 브리오쉬</span></div></div>
       <div class="product-card"><img src="https://placehold.co/400x400/C49060/FEF3C7?text=Soft+Roll" alt="소프트롤"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Soft Roll</span><span class="p-name-ko ko">소프트롤</span><span class="p-desc en">Pillowy soft — perfect for breakfast or snacking</span><span class="p-desc ko">입안 가득 퍼지는 부드러운 식감의 소프트롤</span></div></div>
       <div class="product-card"><img src="https://placehold.co/400x400/EEE8D8/3D2314?text=English+Muffin" alt="잉글리쉬 머핀"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">English Muffin</span><span class="p-name-ko ko">잉글리쉬 머핀</span><span class="p-desc en">Crisp outside, chewy inside — classic British recipe</span><span class="p-desc ko">바삭한 겉면과 쫄깃한 속살 — 전통 영국식</span></div></div>
@@ -649,7 +664,7 @@
 
     <!-- MADELEINES & FINANCIERS -->
     <div id="tab-madeleines" class="tab-panel" style="grid-template-columns:repeat(4,1fr);gap:1.25rem;">
-      <div style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 50ea / box</span><span class="ko">냉동 90일 · 최소발주단위 50ea / box</span></div>
+      <div class="shelf-label" style="grid-column:1/-1;font-size:.65rem;color:rgba(249,244,235,.62);font-family:'Cinzel',serif;letter-spacing:.12em;margin-bottom:.25rem;"><span class="en">Frozen 90 days · Min 50ea / box</span><span class="ko">냉동 90일 · 최소발주단위 50ea / box</span></div>
       <div class="product-card"><img src="https://placehold.co/300x300/E8C870/3D2314?text=Lime+Mad" alt="라임 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Lime Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">라임 마들렌</span></div></div>
       <div class="product-card"><img src="https://placehold.co/300x300/4A6741/FEF3C7?text=Matcha+Mad" alt="녹차 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Matcha Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">녹차 마들렌</span></div></div>
       <div class="product-card"><img src="https://placehold.co/300x300/5C3D2E/D4A855?text=Tea+Mad" alt="홍차 마들렌"><div class="p-overlay"></div><div class="p-info"><span class="p-name en" style="font-size:.9rem;">Black Tea Madeleine</span><span class="p-name-ko ko" style="font-size:.85rem;">홍차 마들렌</span></div></div>
@@ -716,7 +731,7 @@
       <div class="fade-up" style="text-align:center;">
         <div class="cert-ring" style="margin:0 auto 1.25rem;">
           <div style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--amber);">HA</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Hazard Analysis</span><span class="ko">위해요소분석</span></div>
+          <div class="cert-ring-text" style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Hazard Analysis</span><span class="ko">위해요소분석</span></div>
         </div>
         <p style="font-size:.78rem;line-height:1.7;color:var(--brown);">
           <span class="en">Biological, chemical &amp; physical hazard analysis of all ingredients and processes</span>
@@ -727,7 +742,7 @@
       <div class="fade-up d2" style="text-align:center;">
         <div class="cert-ring" style="margin:0 auto 1.25rem;">
           <div style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--amber);">CCP</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Critical Control Point</span><span class="ko">중요관리점</span></div>
+          <div class="cert-ring-text" style="font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--brown);margin-top:.2rem;"><span class="en">Critical Control Point</span><span class="ko">중요관리점</span></div>
         </div>
         <p style="font-size:.78rem;line-height:1.7;color:var(--brown);">
           <span class="en">Key process steps to prevent, eliminate, or reduce hazards to acceptable levels</span>
@@ -742,7 +757,7 @@
           <div style="font-family:'Cinzel',serif;font-size:.75rem;font-weight:700;color:#fff;line-height:1.2;text-align:center;">HACCP</div>
         </div>
         <div style="text-align:left;">
-          <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);">안전관리인증</div>
+          <div class="cert-badge-label" style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);">안전관리인증</div>
           <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);margin-top:.15rem;"><span class="en">Ministry of Food &amp; Drug Safety Certified</span><span class="ko">식품의약품안전처 인증</span></div>
         </div>
       </div>
@@ -781,14 +796,14 @@
         <span class="ko section-title-ko" style="font-size:clamp(1.8rem,3.5vw,3rem);color:var(--cream);display:block;">학술 연구 및<br><em style="color:var(--amber);">출판 저서</em></span>
       </h2>
       <div style="border-bottom:1px solid rgba(215,119,6,.12);padding-bottom:2rem;margin-bottom:2rem;">
-        <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Doctoral Thesis</span><span class="ko">박사학위 논문</span></div>
+        <div class="subsection-label" style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Doctoral Thesis</span><span class="ko">박사학위 논문</span></div>
         <div style="display:flex;flex-direction:column;gap:.9rem;">
           <div style="padding:1rem 1.25rem;border-left:2px solid var(--amber);background:rgba(215,119,6,.05);font-size:.82rem;line-height:1.65;color:rgba(249,244,235,.88);">호텔기업의 고용관계 특성이 직무만족, 조직몰입, 조직시민행동에 미치는 영향</div>
           <div style="padding:1rem 1.25rem;border-left:2px solid var(--amber);background:rgba(215,119,6,.05);font-size:.82rem;line-height:1.65;color:rgba(249,244,235,.88);font-style:italic;">Effect of Rice Composite Flours on the Physicochemical Storability of Bagel Prepared Mixes</div>
         </div>
       </div>
       <div>
-        <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Publications</span><span class="ko">저서</span></div>
+        <div class="subsection-label" style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.55);margin-bottom:1rem;"><span class="en">Publications</span><span class="ko">저서</span></div>
         <div style="display:flex;flex-direction:column;gap:.75rem;">
           <div style="display:flex;gap:1rem;font-size:.82rem;color:rgba(249,244,235,.85);align-items:center;"><span style="width:4px;height:4px;background:var(--amber);border-radius:50%;flex-shrink:0;"></span>제과제빵케익 데커레이션 테크닉</div>
           <div style="display:flex;gap:1rem;font-size:.82rem;color:rgba(249,244,235,.85);align-items:center;"><span style="width:4px;height:4px;background:var(--amber);border-radius:50%;flex-shrink:0;"></span>프로 파티시에를 위한 디저트 &amp; 초콜릿</div>
@@ -811,7 +826,7 @@
     <div class="fade-up" style="position:relative;">
       <img src="https://placehold.co/580x460/8B6347/FEF3C7?text=Special+Gifts" alt="Special Gifts" style="width:100%;object-fit:cover;">
       <div style="position:absolute;top:-18px;right:-18px;padding:1.1rem 1.6rem;background:var(--amber);">
-        <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--choc);"><span class="en">Custom Order</span><span class="ko">맞춤 제작</span></div>
+        <div class="gift-tag-label" style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--choc);"><span class="en">Custom Order</span><span class="ko">맞춤 제작</span></div>
         <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--choc);margin-top:.15rem;"><span class="en">Gift Orders</span><span class="ko">답례품 제작</span></div>
       </div>
     </div>
@@ -828,7 +843,7 @@
       <div style="padding:1.25rem;background:var(--parchment);border-left:3px solid var(--amber);margin-bottom:2rem;display:flex;gap:1rem;align-items:center;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;color:var(--amber)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.4 1.84 2 2 0 012.38 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.55a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92"/></svg>
         <div>
-          <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.3rem;"><span class="en">Order Enquiries</span><span class="ko">답례품 제작 문의</span></div>
+          <div class="order-inquiry-label" style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.3rem;"><span class="en">Order Enquiries</span><span class="ko">답례품 제작 문의</span></div>
           <div style="font-family:'Lora',serif;font-size:.88rem;color:var(--brown-dk);">02-2163-6525 · 010-3364-8885</div>
         </div>
       </div>
