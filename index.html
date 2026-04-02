@@ -299,7 +299,7 @@
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
-  <img class="hero-img" src="https://placehold.co/1920x1080/2C1810/D97706?text=." alt="Artisan bread">
+  <canvas id="hero-bg" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
   <div class="hero-overlay"></div>
   <div class="hero-glow"></div>
 
@@ -906,6 +906,79 @@
 
 
 <script>
+  // ── Hero WebGL Shader Background ──
+  (function() {
+    const canvas = document.getElementById('hero-bg');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) { canvas.style.background = '#2C1810'; return; }
+
+    const vertSrc = `
+      attribute vec2 pos;
+      varying vec2 vUv;
+      void main() {
+        vUv = pos * 0.5 + 0.5;
+        gl_Position = vec4(pos, 0.0, 1.0);
+      }
+    `;
+
+    const fragSrc = `
+      precision highp float;
+      uniform float time;
+      varying vec2 vUv;
+      void main() {
+        vec2 uv = vUv;
+        vec3 dark  = vec3(0.110, 0.047, 0.031);
+        vec3 choc  = vec3(0.173, 0.094, 0.063);
+        vec3 amber = vec3(0.851, 0.467, 0.024);
+        float n = sin(uv.x * 8.0  + time * 0.40) * cos(uv.y * 6.0  + time * 0.25)
+                + sin(uv.x * 14.0 - time * 0.60) * cos(uv.y * 11.0 + time * 0.35) * 0.5
+                + sin((uv.x + uv.y) * 18.0 + time * 0.15) * 0.25;
+        vec3 col = mix(dark, choc, smoothstep(-1.2, 0.5, n));
+        col = mix(col, amber * 0.45, smoothstep(0.6, 1.5, n));
+        float vig = pow(max(1.0 - length(uv - 0.5) * 1.3, 0.0), 1.8);
+        col *= vig * 0.75 + 0.25;
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `;
+
+    function makeShader(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    }
+
+    const prog = gl.createProgram();
+    gl.attachShader(prog, makeShader(gl.VERTEX_SHADER, vertSrc));
+    gl.attachShader(prog, makeShader(gl.FRAGMENT_SHADER, fragSrc));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const posLoc = gl.getAttribLocation(prog, 'pos');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    const timeLoc = gl.getUniformLocation(prog, 'time');
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const t0 = performance.now();
+    (function render() {
+      gl.uniform1f(timeLoc, (performance.now() - t0) * 0.001);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    })();
+  })();
+
   // ── Nav scroll ──
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
