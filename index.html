@@ -49,6 +49,7 @@
       background:none; color:var(--amber); cursor:pointer;
       transition:all .2s ease; border-radius:0;
       display:flex; align-items:center; gap:.4rem;
+      min-height:2.74rem;
     }
     .lang-btn:hover { background:var(--amber); color:var(--choc); }
     .lang-btn:active { opacity:.8; }
@@ -86,23 +87,27 @@
       color:var(--choc); background:var(--amber); padding:.5rem 1.2rem;
       text-decoration:none; transition:background .2s ease, box-shadow .2s ease;
       box-shadow:0 2px 12px rgba(215,119,6,.4);
+      display:inline-flex; align-items:center; justify-content:center;
+      min-height:2.74rem; min-width:6.85rem;
     }
     html.lang-ko .nav-cta { font-family:'Noto Serif KR',serif; font-size:.92rem; letter-spacing:0; }
 
     /* ── Korean 58.6% size overrides ── */
-    html.lang-ko .hero-badge        { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
-    html.lang-ko .hero-sub          { font-size:1.14rem; letter-spacing:.03em; }
-    html.lang-ko .hero-scroll       { font-size:.79rem; }
-    html.lang-ko .section-label     { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:.02em; }
-    html.lang-ko .btn-ghost         { font-size:1.03rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
-    html.lang-ko .tab-btn           { font-size:.92rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
-    html.lang-ko .cred-badge        { font-size:.73rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
-    html.lang-ko .shelf-label       { font-size:1.03rem; }
-    html.lang-ko .cert-ring-text    { font-size:1.24rem; }
-    html.lang-ko .cert-badge-label  { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
-    html.lang-ko .subsection-label  { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.03em; }
-    html.lang-ko .gift-tag-label    { font-size:.82rem; font-family:'Noto Serif KR',serif; letter-spacing:0; }
-    html.lang-ko .order-inquiry-label { font-size:.87rem; font-family:'Noto Serif KR',serif; letter-spacing:.02em; }
+    html.lang-ko .hero-badge        { font-size:.92rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:.03em !important; }
+    html.lang-ko .hero-sub          { font-size:1.14rem !important; letter-spacing:.03em !important; }
+    html.lang-ko .hero-scroll       { font-size:.79rem !important; }
+    html.lang-ko .section-label     { font-size:.92rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:.02em !important; }
+    html.lang-ko .btn-ghost         { font-size:1.03rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; }
+    html.lang-ko .btn-amber         { font-size:1.03rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; }
+    html.lang-ko .tab-btn           { font-size:.92rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; }
+    html.lang-ko .cred-badge        { font-size:.73rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; }
+    html.lang-ko .shelf-label       { font-size:1.03rem !important; }
+    html.lang-ko .cert-ring-text    { font-size:1.24rem !important; font-family:'Noto Serif KR',serif !important; }
+    html.lang-ko .cert-badge-label  { font-size:.87rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:.03em !important; text-transform:none !important; }
+    html.lang-ko .subsection-label  { font-size:.87rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:.03em !important; text-transform:none !important; }
+    html.lang-ko .gift-tag-label    { font-size:.82rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; text-transform:none !important; text-align:center !important; }
+    html.lang-ko .order-inquiry-label { font-size:.87rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:.02em !important; text-transform:none !important; }
+    html.lang-ko .footer-contact-label { font-size:.82rem !important; font-family:'Noto Serif KR',serif !important; letter-spacing:0 !important; text-transform:none !important; }
     .nav-cta:hover { background:var(--amber-lt); }
     .nav-cta:active { opacity:.85; }
 
@@ -891,11 +896,11 @@
         <div class="section-label" style="margin-bottom:2rem;"><span class="en">How to reach us</span><span class="ko">연락처</span></div>
         <div style="display:flex;flex-direction:column;gap:1.75rem;">
           <div>
-            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Address</span><span class="ko">주소</span></div>
+            <div class="footer-contact-label" style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Address</span><span class="ko">주소</span></div>
             <p style="font-size:.84rem;line-height:1.75;color:rgba(249,244,235,.85);">(주)닥터장팩토리<br>서울시 금천구 가마산로 96, 대륭테크노타운 8차 406호</p>
           </div>
           <div>
-            <div style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Phone</span><span class="ko">전화</span></div>
+            <div class="footer-contact-label" style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(215,119,6,.5);margin-bottom:.4rem;"><span class="en">Phone</span><span class="ko">전화</span></div>
             <a href="tel:0221636525" class="footer-link">02-2163-6525</a>
             <span style="color:rgba(255,255,255,.2);margin:0 .5rem;">/</span>
             <a href="tel:01033648885" class="footer-link">010-3364-8885</a>
