@@ -293,8 +293,9 @@
     ::-webkit-scrollbar-track { background:var(--cream); }
     ::-webkit-scrollbar-thumb { background:var(--amber); border-radius:2px; }
 
-    /* Hide mobile-only CTA on desktop */
+    /* Hide mobile-only elements on desktop */
     .nav-mobile-cta { display:none !important; }
+    .nav-links-mobile { display:none !important; }
 
     /* ── HAMBURGER ── */
     .nav-hamburger {
@@ -320,7 +321,12 @@
       .nav-hamburger { display:flex; }
       .nav-cta-desktop { display:none !important; }
 
-      .nav-links {
+      /* Hide the in-nav desktop links on mobile */
+      .nav-links-desktop { display:none !important; }
+
+      /* Mobile overlay — safe on <body>, unaffected by nav backdrop-filter */
+      .nav-links-mobile {
+        display:flex;
         position:fixed; inset:0; z-index:198;
         background:rgba(25,12,7,.97); backdrop-filter:blur(14px);
         flex-direction:column !important; align-items:center !important; justify-content:center !important;
@@ -329,12 +335,13 @@
         transition:transform .35s cubic-bezier(.4,0,.2,1);
         pointer-events:none;
       }
-      .nav-links.open { transform:translateX(0); pointer-events:all; }
-      .nav-links a { font-size:1.05rem !important; letter-spacing:.1em !important; }
-      html.lang-ko .nav-links a { font-size:1.35rem !important; }
+      .nav-links-mobile.open { transform:translateX(0); pointer-events:all; }
+      .nav-links-mobile a { font-size:1.05rem !important; letter-spacing:.1em !important; color:rgba(255,255,255,.75) !important; text-decoration:none; }
+      .nav-links-mobile a:hover { color:var(--amber) !important; }
+      html.lang-ko .nav-links-mobile a { font-size:1.35rem !important; }
 
-      /* Show mobile-only CTA inside the nav overlay */
-      .nav-mobile-cta { display:inline-flex !important; }
+      /* Show mobile-only CTA inside the mobile overlay */
+      .nav-links-mobile .nav-mobile-cta { display:inline-flex !important; }
 
       /* Hero */
       .hero { padding:0 1.25rem 3.5rem !important; }
@@ -480,14 +487,12 @@
     </div>
   </a>
 
-  <div class="nav-links" style="display:flex;">
+  <!-- nav-links lives outside <nav> on mobile to avoid backdrop-filter containing-block bug -->
+  <div class="nav-links nav-links-desktop" style="display:flex;">
     <a href="#about"><span class="en">About</span><span class="ko">소개</span></a>
     <a href="#products"><span class="en">Products</span><span class="ko">제품</span></a>
     <a href="#partners"><span class="en">Partners</span><span class="ko">파트너</span></a>
     <a href="#certification"><span class="en">HACCP</span><span class="ko">인증</span></a>
-    <a href="#contact" class="nav-mobile-cta" style="margin-top:.5rem;padding:.65rem 1.75rem;background:var(--amber);color:var(--choc);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;">
-      <span class="en">Contact</span><span class="ko" style="font-family:'Noto Serif KR',serif;font-size:1rem;letter-spacing:0;text-transform:none;">문의하기</span>
-    </a>
   </div>
 
   <div class="nav-right">
@@ -506,6 +511,17 @@
   </div>
 </nav>
 
+
+<!-- Mobile nav overlay — lives directly on <body> to avoid backdrop-filter containing-block issue -->
+<div class="nav-links nav-links-mobile" aria-hidden="true">
+  <a href="#about"><span class="en">About</span><span class="ko">소개</span></a>
+  <a href="#products"><span class="en">Products</span><span class="ko">제품</span></a>
+  <a href="#partners"><span class="en">Partners</span><span class="ko">파트너</span></a>
+  <a href="#certification"><span class="en">HACCP</span><span class="ko">인증</span></a>
+  <a href="#contact" class="nav-mobile-cta" style="margin-top:.5rem;padding:.65rem 1.75rem;background:var(--amber);color:var(--choc);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;">
+    <span class="en">Contact</span><span class="ko" style="font-family:'Noto Serif KR',serif;font-size:1rem;letter-spacing:0;text-transform:none;">문의하기</span>
+  </a>
+</div>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
@@ -1205,23 +1221,23 @@
   // ── Mobile menu ──
   function toggleMobileMenu() {
     const btn = document.getElementById('navHamburger');
-    const links = document.querySelector('.nav-links');
-    const isOpen = links.classList.toggle('open');
+    const overlay = document.querySelector('.nav-links-mobile');
+    const isOpen = overlay.classList.toggle('open');
     btn.classList.toggle('open', isOpen);
     btn.setAttribute('aria-expanded', isOpen);
+    overlay.setAttribute('aria-hidden', !isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }
-  // Close menu when a nav link is clicked
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  // Close menu when a nav link inside the overlay is clicked
+  document.querySelectorAll('.nav-links-mobile a').forEach(a => {
     a.addEventListener('click', () => {
       const btn = document.getElementById('navHamburger');
-      const links = document.querySelector('.nav-links');
-      if (links.classList.contains('open')) {
-        links.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
+      const overlay = document.querySelector('.nav-links-mobile');
+      overlay.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
     });
   });
 
