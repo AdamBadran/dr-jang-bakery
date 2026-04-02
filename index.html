@@ -140,10 +140,10 @@
     }
     .hero-content { position:relative; z-index:2; max-width:900px; }
     .hero-badge {
-      position:absolute; left:3rem; bottom:84%; z-index:3;
       display:inline-flex; align-items:center; gap:.5rem;
       font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.25em; text-transform:uppercase;
       color:var(--amber); border:1px solid rgba(215,119,6,.5); padding:.4rem 1rem;
+      margin-bottom:1.5rem;
     }
     .hero-badge::before { content:''; width:6px; height:6px; background:var(--amber); border-radius:50%; animation:pulse 2s ease infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
@@ -345,10 +345,6 @@
 
       /* Hero */
       .hero { padding:0 1.25rem 3.5rem !important; }
-      .hero-badge {
-        position:relative !important; left:auto !important; bottom:auto !important;
-        margin-bottom:1.25rem; align-self:flex-start;
-      }
       .hero-content { max-width:100% !important; }
       .hero-bottom { flex-direction:column !important; gap:1.5rem; align-items:flex-start !important; }
       .hero-desc { max-width:100% !important; }
@@ -536,12 +532,11 @@
   <div class="hero-overlay"></div>
   <div class="hero-glow"></div>
 
-  <div class="hero-badge">
-    <span class="en">Available for wholesale &amp; partnership</span>
-    <span class="ko">도매 및 파트너십 문의 환영</span>
-  </div>
-
   <div class="hero-content">
+    <div class="hero-badge">
+      <span class="en">Available for wholesale &amp; partnership</span>
+      <span class="ko">도매 및 파트너십 문의 환영</span>
+    </div>
     <h1 class="hero-title">
       <span class="en">Dr.<em>Jang</em><br>Factory</span>
       <span class="ko ko-title">닥터장<br><em>팩토리</em></span>
