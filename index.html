@@ -144,26 +144,6 @@
     .hero-scroll svg { animation:scrollBounce 2s ease infinite; }
     @keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
-    /* ── HERO SHIMMER ── */
-    @keyframes hero-shimmer {
-      from { background-position-x: 200%; }
-      to   { background-position-x: -100%; }
-    }
-    .hero-shimmer {
-      background: linear-gradient(to right,
-        #fff 0%, #fff 30%,
-        rgba(255,255,255,0.55) 45%,
-        rgba(255,255,255,0.88) 50%,
-        rgba(255,255,255,0.55) 55%,
-        #fff 70%, #fff 100%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-size: 200% 100%;
-      animation: hero-shimmer 2s linear 1.5s 1 forwards;
-    }
-
     /* ── UTILS ── */
     .deco-line { height:1px; background:linear-gradient(to right,transparent,var(--amber),transparent); }
     .section-label { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:var(--amber); }
@@ -330,7 +310,7 @@
     </div>
 
     <h1 class="hero-title">
-      <span class="en"><span class="hero-shimmer">Dr.</span><em>Jang</em><br><span class="hero-shimmer">Factory</span></span>
+      <span class="en">Dr.<em>Jang</em><br>Factory</span>
       <span class="ko ko-title">닥터장<br><em>팩토리</em></span>
     </h1>
 
