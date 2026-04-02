@@ -1,5 +1,18 @@
 # CLAUDE.md — Frontend Website Rules
 
+## Project Goal
+This is an existing Korean bakery/factory portfolio website for Dr. Jang's Bread Factory (닥터장팩토리).
+
+Claude should treat this as a production website that needs ongoing refinement and polishing — not a blank-slate redesign unless explicitly requested.
+
+The site should communicate:
+- premium product quality
+- manufacturing capability
+- certifications (HACCP)
+- reliability for partners, buyers, and B2B clients
+
+---
+
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
@@ -52,3 +65,91 @@
 - Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
+
+---
+
+## Improve, Don't Unnecessarily Rebuild
+Before changing code:
+- Inspect the current implementation
+- Understand the existing structure
+- Preserve what already works
+- Reuse existing components when practical
+- Avoid destructive rewrites unless clearly justified
+
+Do not replace major sections just because a different implementation is possible.
+
+---
+
+## Mobile-First is Mandatory
+Every change must be evaluated for mobile responsiveness. Treat mobile optimization as a top priority, not an afterthought.
+
+All UI must work well on:
+- 390px
+- 430px
+- 768px
+- 1024px
+- 1440px
+
+Hard requirements:
+- No horizontal scroll
+- No cut-off text
+- No broken layouts
+- No overlapping elements
+- No tiny tap targets
+- No unusable menus
+- No awkward image cropping
+- No poor spacing on small screens
+
+If a desktop design choice hurts mobile usability, prioritize mobile usability.
+
+---
+
+## Product / Factory / Trust Signal Emphasis
+When improving the site, prioritize strong presentation of:
+- Products
+- Factory capabilities and facilities/equipment
+- Certifications and quality assurance
+- Contact / inquiry conversion
+
+These are more important than decorative effects.
+
+---
+
+## Bilingual Support
+The website is Korean-first, with English support.
+
+Ensure:
+- The language toggle works consistently
+- Layouts remain stable in both languages
+- No mixed-language broken UI
+- Translations do not break spacing or component sizing
+
+---
+
+## Performance Expectations
+Optimize for real-world performance, especially on mobile.
+
+Prefer:
+- Optimized images
+- Lazy loading where useful
+- Efficient rendering
+- Stable layout
+- Minimal unnecessary JS complexity
+
+Avoid bloated or unnecessary solutions.
+
+---
+
+## Code Style Expectations
+Keep the codebase clean, maintainable, readable, and consistent.
+
+Prefer:
+- Reusable components where helpful
+- Clear naming
+- Simple, robust implementations
+
+Avoid:
+- Overengineering
+- Unnecessary abstractions
+- Large speculative rewrites
+- Style inconsistency
