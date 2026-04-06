@@ -1,155 +1,57 @@
-# CLAUDE.md — Frontend Website Rules
+# CLAUDE.md — Dr. Jang's Bread Factory
 
 ## Project Goal
-This is an existing Korean bakery/factory portfolio website for Dr. Jang's Bread Factory (닥터장팩토리).
-
-Claude should treat this as a production website that needs ongoing refinement and polishing — not a blank-slate redesign unless explicitly requested.
-
-The site should communicate:
-- premium product quality
-- manufacturing capability
-- certifications (HACCP)
-- reliability for partners, buyers, and B2B clients
+Production portfolio site for Dr. Jang's Bread Factory (닥터장팩토리) — a Korean premium B2B bakery. Treat as an existing site needing refinement, not a redesign. The site communicates product quality, HACCP certification, manufacturing capability, and B2B partnership.
 
 ---
 
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
-## Reference Images
-- If a reference image is provided: match layout, spacing, typography, and color exactly. Swap in placeholder content (images via `https://placehold.co/`, generic copy). Do not improve or add to the design.
-- If no reference image: design from scratch with high craft (see guardrails below).
-- Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do at least 2 comparison rounds. Stop only when no visible differences remain or user says so.
+---
 
-## Local Server
-- **Always serve on localhost** — never screenshot a `file:///` URL.
-- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:3000`)
-- `serve.mjs` lives in the project root. Start it in the background before taking any screenshots.
-- If the server is already running, do not start a second instance.
+## Tooling
+- **Server:** `node serve.mjs` in background → `http://localhost:3001`. Never screenshot `file:///`. Don't start a second instance if already running.
+- **Screenshots:** `node screenshot.mjs http://localhost:3001 [label]` → saves to `./temporary screenshots/screenshot-N[-label].png`. Read the PNG with the Read tool after every shot.
+- **Puppeteer:** installed in project root, Chrome cached at `~/.cache/puppeteer/`.
+- **Formspree:** contact form endpoint `xaqlpywo` (Formspree Ajax, already wired up). This is the **production** endpoint — localhost submissions are blocked by Formspree by default, but do not use this ID for staging/automated testing.
 
-## Screenshot Workflow
-- Puppeteer is installed locally via `npm install puppeteer` in the project root. Chrome is managed automatically by Puppeteer (cached at `~/.cache/puppeteer/`).
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
-- Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
-- `screenshot.mjs` lives in the project root. Use it as-is.
-- After screenshotting, read the PNG from `temporary screenshots/` with the Read tool — Claude can see and analyze the image directly.
-- When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
-- Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
+---
 
 ## Output Defaults
-- Single `index.html` file, all styles inline, unless user says otherwise
-- Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
+- Single `index.html`, all styles inline
+- Tailwind CSS via CDN
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
-- Mobile-first responsive
+- Check `brand_assets/` first — use real assets if present, never placeholders where real ones exist
 
-## Brand Assets
-- Always check the `brand_assets/` folder before designing. It may contain logos, color guides, style guides, or images.
-- If assets exist there, use them. Do not use placeholders where real assets are available.
-- If a logo is present, use it. If a color palette is defined, use those exact values — do not invent brand colors.
+---
 
 ## Anti-Generic Guardrails
-- **Colors:** Never use default Tailwind palette (indigo-500, blue-600, etc.). Pick a custom brand color and derive from it.
-- **Shadows:** Never use flat `shadow-md`. Use layered, color-tinted shadows with low opacity.
-- **Typography:** Never use the same font for headings and body. Pair a display/serif with a clean sans. Apply tight tracking (`-0.03em`) on large headings, generous line-height (`1.7`) on body.
-- **Gradients:** Layer multiple radial gradients. Add grain/texture via SVG noise filter for depth.
-- **Animations:** Only animate `transform` and `opacity`. Never `transition-all`. Use spring-style easing.
-- **Interactive states:** Every clickable element needs hover, focus-visible, and active states. No exceptions.
-- **Images:** Add a gradient overlay (`bg-gradient-to-t from-black/60`) and a color treatment layer with `mix-blend-multiply`.
-- **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
-- **Depth:** Surfaces should have a layering system (base → elevated → floating), not all sit at the same z-plane.
+- No default Tailwind palette (no indigo-500, blue-600). Use project brand colors.
+- No `transition-all`. Animate only `transform` and `opacity`.
+- Pair display font with body font — never same font for both.
+- Every clickable element needs hover, focus-visible, and active states.
+- Surfaces need depth layers (base → elevated → floating), not flat z-planes.
+
+---
 
 ## Hard Rules
-- Do not add sections, features, or content not in the reference
-- Do not "improve" a reference design — match it
-- Do not stop after one screenshot pass
-- Do not use `transition-all`
-- Do not use default Tailwind blue/indigo as primary color
+- Do not add unrequested sections, features, or content
+- Do not stop after one screenshot pass — minimum 2 rounds
+- Read before editing — never guess at existing code
+- Confirm before any destructive git action
 
 ---
 
-## Improve, Don't Unnecessarily Rebuild
-Before changing code:
-- Inspect the current implementation
-- Understand the existing structure
-- Preserve what already works
-- Reuse existing components when practical
-- Avoid destructive rewrites unless clearly justified
+## Mobile-First
+Test at: 390px · 430px · 768px · 1024px · 1440px
 
-Do not replace major sections just because a different implementation is possible.
+No horizontal scroll · No cut-off text · No overlapping elements · No tiny tap targets · No broken layouts
 
 ---
 
-## Mobile-First is Mandatory
-Every change must be evaluated for mobile responsiveness. Treat mobile optimization as a top priority, not an afterthought.
-
-All UI must work well on:
-- 390px
-- 430px
-- 768px
-- 1024px
-- 1440px
-
-Hard requirements:
-- No horizontal scroll
-- No cut-off text
-- No broken layouts
-- No overlapping elements
-- No tiny tap targets
-- No unusable menus
-- No awkward image cropping
-- No poor spacing on small screens
-
-If a desktop design choice hurts mobile usability, prioritize mobile usability.
-
----
-
-## Product / Factory / Trust Signal Emphasis
-When improving the site, prioritize strong presentation of:
-- Products
-- Factory capabilities and facilities/equipment
-- Certifications and quality assurance
-- Contact / inquiry conversion
-
-These are more important than decorative effects.
-
----
-
-## Bilingual Support
-The website is Korean-first, with English support.
-
-Ensure:
-- The language toggle works consistently
-- Layouts remain stable in both languages
-- No mixed-language broken UI
-- Translations do not break spacing or component sizing
-
----
-
-## Performance Expectations
-Optimize for real-world performance, especially on mobile.
-
-Prefer:
-- Optimized images
-- Lazy loading where useful
-- Efficient rendering
-- Stable layout
-- Minimal unnecessary JS complexity
-
-Avoid bloated or unnecessary solutions.
-
----
-
-## Code Style Expectations
-Keep the codebase clean, maintainable, readable, and consistent.
-
-Prefer:
-- Reusable components where helpful
-- Clear naming
-- Simple, robust implementations
-
-Avoid:
-- Overengineering
-- Unnecessary abstractions
-- Large speculative rewrites
-- Style inconsistency
+## Site-Specific
+- **Bilingual:** Korean-first (`lang-ko` default), English toggle. Korean font overrides use `html.lang-ko` selectors with `!important`. Korean UI text is 58.6% larger than English equivalents.
+- **Priority order:** Products → Factory/certifications → Contact conversion → decorative polish
+- **Improve, don't rebuild:** Read existing code first. Preserve what works. No rewrites without clear justification.
+- **Code quality:** Simple, readable, no overengineering, no speculative abstractions.
