@@ -215,7 +215,8 @@
     .tab-panel { display:none; }
     .tab-panel.active { display:grid; }
 
-    .product-card { position:relative; overflow:hidden; cursor:pointer; background:var(--parchment); }
+    .product-card { position:relative; overflow:hidden; cursor:pointer; background:var(--parchment); transition:transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s ease; z-index:0; }
+    .product-card:hover { transform:translateY(-4px) scale(1.015); box-shadow:0 16px 48px rgba(44,24,16,.5); z-index:1; }
     .product-card img {
       width:100%; aspect-ratio:1; object-fit:cover;
       transition:transform .6s cubic-bezier(.25,.46,.45,.94);
@@ -596,13 +597,13 @@
 <section id="about" style="background:var(--choc);padding:4.5rem 3rem;border-bottom:1px solid rgba(215,119,6,.1);">
   <div class="stats-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;">
     <div class="fade-up">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">40+</div>
+      <div class="stat-num" data-target="40" data-suffix="+" style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">40+</div>
       <div class="section-label" style="margin-top:.5rem;">
         <span class="en">Years Experience</span><span class="ko">년 경력</span>
       </div>
     </div>
     <div class="fade-up d1">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">30+</div>
+      <div class="stat-num" data-target="30" data-suffix="+" style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">30+</div>
       <div class="section-label" style="margin-top:.5rem;">
         <span class="en">Hotel Partners</span><span class="ko">호텔 파트너</span>
       </div>
@@ -614,7 +615,7 @@
       </div>
     </div>
     <div class="fade-up d3">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">3</div>
+      <div class="stat-num" data-target="3" data-suffix="" style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">3</div>
       <div class="section-label" style="margin-top:.5rem;">
         <span class="en">Master Titles</span><span class="ko">명인 타이틀</span>
       </div>
@@ -1344,6 +1345,9 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <script>
   // ── Hero WebGL Shader Background ──
   (function() {
@@ -1466,21 +1470,69 @@
     document.querySelector(`[data-tab="${name}"]`).classList.add('active');
     const panel = document.getElementById('tab-' + name);
     panel.classList.add('active');
-    // Re-trigger animations for newly visible cards
-    panel.querySelectorAll('.fade-up').forEach(el => {
-      el.classList.remove('visible');
-      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
-    });
+    if (typeof gsap !== 'undefined' && !navigator.webdriver) {
+      gsap.fromTo(panel.querySelectorAll('.product-card'),
+        { opacity:0, y:18 },
+        { opacity:1, y:0, stagger:0.06, duration:0.5, ease:'power2.out' }
+      );
+    } else {
+      panel.querySelectorAll('.fade-up').forEach(el => {
+        el.classList.remove('visible');
+        requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+      });
+    }
   }
 
   // ── Scroll reveal ──
-  // Puppeteer/headless: navigator.webdriver is true → reveal everything immediately for fullPage screenshots
-  if (navigator.webdriver) {
+  if (navigator.webdriver || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Headless / reduced motion: reveal everything instantly
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  } else if (typeof gsap !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // General fade-up for all elements (exclude .b2b-step — handled separately with stagger)
+    document.querySelectorAll('.fade-up:not(.b2b-step)').forEach(el => {
+      const delay = el.classList.contains('d4') ? 0.4 :
+                    el.classList.contains('d3') ? 0.3 :
+                    el.classList.contains('d2') ? 0.2 :
+                    el.classList.contains('d1') ? 0.1 : 0;
+      gsap.fromTo(el,
+        { opacity:0, y:32 },
+        { opacity:1, y:0, duration:0.8, delay, ease:'power3.out',
+          scrollTrigger:{ trigger:el, start:'top 90%', once:true } }
+      );
+    });
+
+    // Stats counter — counts up when section scrolls into view
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target, duration:1.8, ease:'power2.out',
+        onUpdate() { el.textContent = Math.round(obj.val) + suffix; },
+        scrollTrigger:{ trigger:el, start:'top 85%', once:true }
+      });
+    });
+
+    // Hero glow parallax — floats upward as you scroll past the hero
+    gsap.to('.hero-glow', {
+      y: -80, ease:'none',
+      scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:1.5 }
+    });
+
+    // B2B steps — sequential entrance left to right
+    gsap.fromTo('.b2b-step',
+      { opacity:0, y:40 },
+      { opacity:1, y:0, stagger:0.18, duration:0.85, ease:'power3.out',
+        scrollTrigger:{ trigger:'.b2b-steps', start:'top 80%', once:true } }
+    );
+
   } else {
+    // Fallback if GSAP fails to load
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold:0.08, rootMargin:'0px 0px -40px 0px' });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }
 </script>
