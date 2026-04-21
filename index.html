@@ -1240,21 +1240,23 @@
               style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(215,119,6,.2);color:var(--cream);font-family:'Lora',serif;font-size:.88rem;padding:.85rem 1rem;outline:none;resize:none;transition:border-color .2s ease;box-sizing:border-box;line-height:1.7;"
               onfocus="this.style.borderColor='rgba(215,119,6,.6)'" onblur="this.style.borderColor='rgba(215,119,6,.2)'"></textarea>
           </div>
-          <button type="submit" id="nl-submit-btn" class="btn-amber" style="border:none;cursor:pointer;align-self:flex-start;opacity:1;transition:opacity .2s ease;">
-            <span class="en">Send Message</span><span class="ko">메시지 보내기</span>
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h13M9 1l4 4-4 4"/></svg>
-          </button>
-          <div id="nl-success" style="display:none;opacity:1;padding:1rem;border:1px solid rgba(215,119,6,.4);background:rgba(215,119,6,.08);margin-top:.5rem;transition:opacity .6s ease;">
-            <p style="font-family:'Lora',serif;font-style:italic;font-size:.78rem;color:var(--amber);line-height:1.6;margin:0;">
-              <span class="en">Thank you! Your message has been received. We'll be in touch soon.</span>
-              <span class="ko">감사합니다! 메시지를 받았습니다. 곧 연락드리겠습니다.</span>
-            </p>
-          </div>
-          <div id="nl-error" style="display:none;padding:1rem;border:1px solid rgba(220,50,50,.4);background:rgba(220,50,50,.06);margin-top:.5rem;">
-            <p style="font-family:'Lora',serif;font-size:.85rem;color:rgba(255,120,120,.9);margin:0;">
-              <span class="en">Something went wrong. Please try again or contact us directly.</span>
-              <span class="ko">오류가 발생했습니다. 다시 시도하거나 직접 연락 주세요.</span>
-            </p>
+          <div style="position:relative;">
+            <button type="submit" id="nl-submit-btn" class="btn-amber" style="border:none;cursor:pointer;opacity:1;transition:opacity .2s ease;">
+              <span class="en">Send Message</span><span class="ko">메시지 보내기</span>
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h13M9 1l4 4-4 4"/></svg>
+            </button>
+            <div id="nl-success" style="display:none;opacity:1;position:absolute;top:calc(100% + .5rem);left:0;right:0;padding:1rem;border:1px solid rgba(215,119,6,.4);background:rgba(215,119,6,.08);transition:opacity .6s ease;">
+              <p style="font-family:'Lora',serif;font-style:italic;font-size:.78rem;color:var(--amber);line-height:1.6;margin:0;">
+                <span class="en">Thank you! Your message has been received. We'll be in touch soon.</span>
+                <span class="ko">감사합니다! 메시지를 받았습니다. 곧 연락드리겠습니다.</span>
+              </p>
+            </div>
+            <div id="nl-error" style="display:none;position:absolute;top:calc(100% + .5rem);left:0;right:0;padding:1rem;border:1px solid rgba(220,50,50,.4);background:rgba(220,50,50,.06);">
+              <p style="font-family:'Lora',serif;font-size:.85rem;color:rgba(255,120,120,.9);margin:0;">
+                <span class="en">Something went wrong. Please try again or contact us directly.</span>
+                <span class="ko">오류가 발생했습니다. 다시 시도하거나 직접 연락 주세요.</span>
+              </p>
+            </div>
           </div>
         </form>
       </div>
