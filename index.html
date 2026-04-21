@@ -1198,20 +1198,6 @@
 
       <!-- Contact Form -->
       <div class="fade-up">
-        <!-- Success message (hidden until form submitted) -->
-        <div id="nl-success" style="display:none;padding:1.5rem;border:1px solid rgba(215,119,6,.4);background:rgba(215,119,6,.08);margin-bottom:1.5rem;">
-          <p style="font-family:'Lora',serif;font-style:italic;font-size:.95rem;color:var(--amber);line-height:1.7;margin:0;">
-            <span class="en">Thank you! Your message has been received. We'll be in touch soon.</span>
-            <span class="ko">감사합니다! 메시지를 받았습니다. 곧 연락드리겠습니다.</span>
-          </p>
-        </div>
-        <div id="nl-error" style="display:none;padding:1rem;border:1px solid rgba(220,50,50,.4);background:rgba(220,50,50,.06);margin-bottom:1.5rem;">
-          <p style="font-family:'Lora',serif;font-size:.85rem;color:rgba(255,120,120,.9);margin:0;">
-            <span class="en">Something went wrong. Please try again or contact us directly.</span>
-            <span class="ko">오류가 발생했습니다. 다시 시도하거나 직접 연락 주세요.</span>
-          </p>
-        </div>
-
         <form id="contact-form" name="contact" netlify style="display:flex;flex-direction:column;gap:1.5rem;">
           <input type="hidden" name="form-name" value="contact">
           <div>
@@ -1258,6 +1244,18 @@
             <span class="en">Send Message</span><span class="ko">메시지 보내기</span>
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5h13M9 1l4 4-4 4"/></svg>
           </button>
+          <div id="nl-success" style="display:none;padding:1.5rem;border:1px solid rgba(215,119,6,.4);background:rgba(215,119,6,.08);margin-top:.5rem;">
+            <p style="font-family:'Lora',serif;font-style:italic;font-size:.95rem;color:var(--amber);line-height:1.7;margin:0;">
+              <span class="en">Thank you! Your message has been received. We'll be in touch soon.</span>
+              <span class="ko">감사합니다! 메시지를 받았습니다. 곧 연락드리겠습니다.</span>
+            </p>
+          </div>
+          <div id="nl-error" style="display:none;padding:1rem;border:1px solid rgba(220,50,50,.4);background:rgba(220,50,50,.06);margin-top:.5rem;">
+            <p style="font-family:'Lora',serif;font-size:.85rem;color:rgba(255,120,120,.9);margin:0;">
+              <span class="en">Something went wrong. Please try again or contact us directly.</span>
+              <span class="ko">오류가 발생했습니다. 다시 시도하거나 직접 연락 주세요.</span>
+            </p>
+          </div>
         </form>
       </div>
 
@@ -1642,6 +1640,7 @@
       if (res.ok) {
         successEl.style.display = 'block';
         form.reset();
+        setTimeout(() => { successEl.style.display = 'none'; }, 5000);
       } else {
         errorEl.style.display = 'block';
       }
