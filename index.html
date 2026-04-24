@@ -63,7 +63,7 @@
       display:flex; align-items:center; gap:.4rem;
       min-height:2.74rem;
     }
-    .lang-btn:hover { background:var(--amber); color:var(--choc); }
+    @media (hover: hover) { .lang-btn:hover { background:var(--amber); color:var(--choc); } }
     .lang-btn:active { opacity:.8; }
     .lang-btn:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
 
@@ -596,7 +596,7 @@
 
 
 <!-- ═══ STATS ═══ -->
-<section id="about" style="background:var(--choc);padding:4.5rem 3rem;border-bottom:1px solid rgba(215,119,6,.1);">
+<section id="about" style="background:var(--choc);background-image:linear-gradient(rgba(22,10,4,.82),rgba(22,10,4,.82)),url('pictures/Brand Story Background.jpg');background-size:cover;background-position:center;padding:4.5rem 3rem;border-bottom:1px solid rgba(215,119,6,.1);">
   <div class="stats-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;">
     <div class="fade-up">
       <div class="stat-num" data-target="40" data-suffix="+" style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--amber);line-height:1;">40+</div>
@@ -883,6 +883,8 @@
       <div class="product-card"><img src="pictures/Brownie.jpg" alt="브라우니"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Brownie</span><span class="p-name-ko ko">브라우니</span><span class="p-desc en">Round &amp; cute — deep chocolate, perfectly moist</span><span class="p-desc ko">동그란 귀여운 모양, 깊은 초콜릿과 촉촉한 식감</span></div></div>
       <div class="product-card"><span class="p-tag">Italian</span><img src="pictures/Biscotti.jpg" alt="비스코티"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Biscotti</span><span class="p-name-ko ko">비스코티</span><span class="p-desc en">Double-baked Italian classic — almonds &amp; dried fruit</span><span class="p-desc ko">두 번 구워낸 이탈리아 전통 — 아몬드와 건과일</span></div></div>
       <div class="product-card"><span class="p-tag"><span class="en">Healthy</span><span class="ko">건강</span></span><img src="pictures/Granola Bar.jpg" alt="그래놀라바"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Granola Bar</span><span class="p-name-ko ko">그래놀라바</span><span class="p-desc en">Oats, nuts &amp; dried fruit — the perfect energy snack</span><span class="p-desc ko">귀리·견과류·건과일의 건강한 에너지 스낵</span></div></div>
+      <div class="product-card fade-up"><span class="p-tag">B2B</span><img src="pictures/Chocolate Cake Sheet.jpg" alt="초콜릿 케이크시트"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Chocolate Cake Sheet</span><span class="p-name-ko ko">초콜릿 케이크시트</span><span class="p-desc en">Rich cocoa sponge — B2B patisserie staple</span><span class="p-desc ko">진한 코코아 풍미의 촉촉한 시트, 전문 베이커리용</span></div></div>
+      <div class="product-card fade-up d1"><span class="p-tag">B2B</span><img src="pictures/Vanilla Cake Sheet.jpg" alt="바닐라 케이크시트"><div class="p-overlay"></div><div class="p-info"><span class="p-name en">Vanilla Cake Sheet</span><span class="p-name-ko ko">바닐라 케이크시트</span><span class="p-desc en">Classic vanilla sponge — light, moist, versatile</span><span class="p-desc ko">깔끔한 바닐라 풍미의 촉촉한 시트, 다양하게 활용</span></div></div>
     </div>
 
     <!-- ARTISAN BREADS -->
@@ -1060,7 +1062,7 @@
 <section id="gifts" style="background:var(--cream);padding:7rem 3rem;">
   <div class="gifts-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
     <div class="fade-up" style="position:relative;">
-      <img src="https://placehold.co/580x460/8B6347/FEF3C7?text=Special+Gifts" alt="Special Gifts" style="width:100%;object-fit:cover;">
+      <img src="pictures/Gifts.jpg" alt="Special Gifts" style="width:100%;object-fit:cover;">
       <div style="position:absolute;top:-18px;right:-18px;padding:1.1rem 1.6rem;background:var(--amber);">
         <div class="gift-tag-label" style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--choc);"><span class="en">Custom Order</span><span class="ko">맞춤 제작</span></div>
         <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--choc);margin-top:.15rem;"><span class="en">Gift Orders</span><span class="ko">답례품 제작</span></div>
@@ -1093,7 +1095,7 @@
 
 
 <!-- ═══ B2B ORDERING PROCESS ═══ -->
-<section id="b2b" style="background:var(--choc);padding:7rem 3rem;">
+<section id="b2b" style="background:var(--choc);background-image:linear-gradient(rgba(22,10,4,.85),rgba(22,10,4,.85)),url('pictures/Background.jpg');background-size:cover;background-position:center;padding:7rem 3rem;">
   <div style="max-width:1200px;margin:0 auto;">
     <div class="fade-up" style="text-align:center;margin-bottom:4.5rem;">
       <div class="section-label" style="margin-bottom:1.25rem;justify-content:center;">
@@ -1182,7 +1184,7 @@
 </section>
 
 <!-- ═══ CONTACT FORM ═══ -->
-<section id="contact" style="background:var(--dark);padding:7rem 3rem;">
+<section id="contact" style="background:var(--dark);background-image:linear-gradient(rgba(22,10,4,.80),rgba(22,10,4,.80)),url('pictures/Conact Page Background.jpg');background-size:cover;background-position:center;padding:7rem 3rem;">
   <div style="max-width:1200px;margin:0 auto;">
     <div class="fade-up" style="text-align:center;margin-bottom:4.5rem;">
       <div class="section-label" style="margin-bottom:1.25rem;justify-content:center;">
