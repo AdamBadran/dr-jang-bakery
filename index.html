@@ -265,6 +265,8 @@
     .partner-era-label { font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:var(--amber);margin-bottom:1.5rem;letter-spacing:.02em; }
     .partner-era-logos { display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.25rem;align-items:center;justify-items:center; }
     .partner-era-logos .partner-logo { width:auto;max-width:100%;height:auto; }
+    .partner-logos-toggle { display:none;margin-top:1.25rem;background:none;border:1px solid rgba(215,119,6,.3);color:var(--amber);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.14em;padding:.6rem 1.5rem;cursor:pointer;width:100%;transition:opacity .2s; }
+    .partner-logos-toggle:hover { opacity:.7; }
 
     /* ── CERT ── */
     .cert-ring {
@@ -402,6 +404,9 @@
       .partners-eras { grid-template-columns:1fr !important; padding:0 1.25rem !important; gap:0 !important; }
       .partner-era + .partner-era { border-left:none !important; padding-left:0 !important; border-top:1px solid rgba(215,119,6,.12); padding-top:2rem !important; margin-top:2rem !important; }
       #partners > div:first-child { padding:0 1.25rem !important; margin-bottom:2rem; }
+      .partner-era:last-child .partner-era-logos > :nth-child(n+7) { display:none; }
+      .partner-era:last-child .partner-era-logos.logos-expanded > :nth-child(n+7) { display:block; }
+      .partner-logos-toggle { display:block; }
 
       /* HACCP */
       #certification { padding:4.5rem 1.25rem !important; }
@@ -977,7 +982,7 @@
         <svg class="partner-logo" style="max-height:42px;width:auto;max-width:100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 46"><text x="65" y="14" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="10" letter-spacing="4" fill="#000">BANYAN</text><line x1="5" y1="19" x2="125" y2="19" stroke="#000" stroke-width="0.7"/><text x="65" y="38" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="10" letter-spacing="5" fill="#000">TREE</text></svg>
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Four_Points_Logo_neu.svg" alt="Four Points by Sheraton" class="partner-logo" style="max-height:42px;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Hanwha_logo.svg" alt="Hanwha Hotels & Resort" class="partner-logo" style="max-height:42px;">
-        <img src="brand_assets/doubletree.svg" alt="DoubleTree by Hilton" class="partner-logo" style="max-height:42px;">
+        <img src="brand_assets/doubletree.svg" alt="DoubleTree by Hilton" class="partner-logo" style="max-height:54px;">
         <img src="brand_assets/mondrian.svg" alt="Mondrian" class="partner-logo" style="max-height:20px;">
         <svg class="partner-logo" style="max-height:40px;width:auto;max-width:100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 42"><text x="70" y="22" text-anchor="middle" font-family="'Cinzel','Cormorant Garamond',Georgia,serif" font-size="17" letter-spacing="7" fill="#000">JOSUN</text><text x="70" y="37" text-anchor="middle" font-family="'Cinzel','Cormorant Garamond',Georgia,serif" font-size="9" letter-spacing="5" fill="#000">PALACE</text></svg>
         <svg class="partner-logo" style="max-height:40px;width:auto;max-width:100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 46"><text x="90" y="13" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="8" letter-spacing="3" fill="#000">THE</text><text x="90" y="28" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="13" letter-spacing="3" fill="#000">WESTIN JOSUN</text><text x="90" y="42" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="8" letter-spacing="4" fill="#000">SEOUL</text></svg>
@@ -987,6 +992,9 @@
         <img src="brand_assets/solbeach.svg" alt="Sol Beach" class="partner-logo" style="max-height:42px;opacity:1;filter:brightness(0) invert(1) contrast(2);">
         <svg class="partner-logo" style="max-height:42px;width:auto;max-width:100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44"><text x="90" y="22" text-anchor="middle" font-family="'Cinzel','Cormorant Garamond',Georgia,serif" font-size="15" letter-spacing="3.5" fill="#000">DRAGON CITY</text><text x="90" y="38" text-anchor="middle" font-family="'Cinzel','Cormorant Garamond',Georgia,serif" font-size="8" letter-spacing="3" fill="#000">HOTEL · SEOUL</text></svg>
       </div>
+      <button class="partner-logos-toggle" onclick="togglePartnerLogos(this)">
+        <span class="en">See all partners ↓</span><span class="ko">전체 파트너 보기 ↓</span>
+      </button>
     </div>
 
   </div>
@@ -1585,6 +1593,13 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold:0.08, rootMargin:'0px 0px -40px 0px' });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  }
+
+  function togglePartnerLogos(btn) {
+    const grid = btn.previousElementSibling;
+    const expanded = grid.classList.toggle('logos-expanded');
+    btn.querySelector('.en').textContent = expanded ? 'Show less ↑' : 'See all partners ↓';
+    btn.querySelector('.ko').textContent = expanded ? '접기 ↑' : '전체 파트너 보기 ↓';
   }
 </script>
 
