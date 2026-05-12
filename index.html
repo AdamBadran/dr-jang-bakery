@@ -1540,7 +1540,7 @@
       const suffix = el.dataset.suffix || '';
       const obj = { val: 0 };
       gsap.to(obj, {
-        val: target, duration:2.7, ease:'power2.out',
+        val: target, duration:4.05, ease:'power2.out',
         onUpdate() { el.textContent = Math.round(obj.val) + suffix; },
         scrollTrigger:{ trigger:el, start:'top 85%', once:true }
       });
